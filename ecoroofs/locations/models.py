@@ -25,6 +25,8 @@ class Location(BaseModel):
 
     irrigated = models.NullBooleanField()
     square_footage = models.PositiveIntegerField(null=True)
+    year_built = models.PositiveSmallIntegerField(null=True, blank=True,
+                                             verbose_name="Year built")
 
     building_use = models.ForeignKey('BuildingUse')
     watershed = models.ForeignKey('Watershed', null=True, blank=True)

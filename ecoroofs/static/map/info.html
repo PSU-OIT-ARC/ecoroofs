@@ -16,6 +16,9 @@
         <div>{{ $ctrl.location.neighborhood.name }} neighborhood</div>
         <div>{{ $ctrl.location.building_use.name }} usage</div>
         <div>{{ $ctrl.location.square_footage|number }} sq. ft.</div>
+        <div ng-if="$ctrl.location.year_built !== null">
+            Built in {{ $ctrl.location.year_built }}.
+        </div>
         <div ng-if="$ctrl.location.watershed">{{ $ctrl.location.watershed.name }} watershed</div>
         <div ng-if="$ctrl.location.irrigated === null">
             May be irrigated (unknown)
