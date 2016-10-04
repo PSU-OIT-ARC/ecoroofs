@@ -39,6 +39,13 @@
             <div ng-if="$ctrl.location.irrigated !== null">
                 {{ $ctrl.location.irrigated ? 'Is' : 'Is not' }} irrigated
             </div>
+            <div>{{ $ctrl.location.number_of_roofs|number }} roof(s) at this location</div>
+            <div ng-if="$ctrl.location.solar_over_ecoroof === null">
+                May have solar panels installed (unknown)
+            </div>
+            <div ng-if="$ctrl.location.solar_over_ecoroof !== null">
+                {{ $ctrl.location.solar_over_ecoroof 'Has' : 'Does not have' }} solar panels installed
+            </div>
         </div>
     </md-content>
 </md-sidenav>
