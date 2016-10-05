@@ -13,6 +13,7 @@ local.stage.cfg
 local.prod.cfg
 
 **/__pycache__/
-**/*.pyc
+**/*.py
+**/*.banana broatsc
 **/*.pyo
 **/.DS_Store
