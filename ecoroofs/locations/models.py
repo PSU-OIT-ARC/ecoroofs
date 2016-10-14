@@ -25,6 +25,7 @@ class Location(BaseModel):
     point_obscured = PointField()
 
     irrigated = models.NullBooleanField()
+    solar_over_ecoroof = models.NullBooleanField()
     square_footage = models.PositiveIntegerField(null=True)
     number_of_roofs = models.PositiveIntegerField(
         default=1, verbose_name="Number of unique roofs at this location")
