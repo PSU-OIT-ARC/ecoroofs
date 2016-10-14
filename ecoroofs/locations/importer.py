@@ -21,7 +21,7 @@ FIELD_NAME_MAP = {
     'Type': '',
     'Year Built': 'year_built',
     'Size (sf)': 'square_footage',
-    'Number': '',
+    'Number': 'number_of_roofs',
     'Latitude(Non Obscured)': 'latitude',
     'Longitude (Non Obscured)': 'longitude',
     'Confidence (Non Obscured)': 'confidence',
@@ -186,6 +186,16 @@ class Importer:
 
             irrigated = self.as_bool(row['irrigated'], null=True)
 
+            number_of_roofs = row['number_of_roofs']
+            if number_of_roofs is None:
+                self.warn('Number of roofs not set for location \
+                          "{name}" Using default value'.format_map(locals()))
+                field = Location._meta.get_field('number_of_roofs')
+                number_of_roofs = field.get_default()
+            else:
+                number_of_roofs = int(number_of_roofs)
+
+
             square_footage = row['square_footage']
             if square_footage is None:
                 self.warn('Square footage not set for location "{name}"'.format_map(locals()))
@@ -231,6 +241,7 @@ class Importer:
                 point=point,
                 point_obscured=point_obscured,
                 irrigated=irrigated,
+                number_of_roofs=number_of_roofs,
                 square_footage=square_footage,
                 year_built=year_built,
                 building_use=building_use,

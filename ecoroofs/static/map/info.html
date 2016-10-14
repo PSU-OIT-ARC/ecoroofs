@@ -39,6 +39,9 @@
             <div ng-if="$ctrl.location.irrigated !== null">
                 {{ $ctrl.location.irrigated ? 'Is' : 'Is not' }} irrigated
             </div>
+            <div>
+                {{ $ctrl.location.number_of_roofs|number }} roof(s) at this location
+            </div>
         </div>
     </md-content>
 </md-sidenav>
