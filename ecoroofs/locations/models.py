@@ -14,6 +14,7 @@ __all__ = [
     'BuildingUse',
     'Contractor',
     'Watershed',
+    'Contractor',
 ]
 
 
@@ -70,5 +71,10 @@ class Contractor(BaseModel):
 
 
 class Watershed(BaseModel):
+
+    pass
+
+
+class Contractor(BaseModel):
 
     pass

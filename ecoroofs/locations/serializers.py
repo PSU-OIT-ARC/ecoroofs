@@ -42,6 +42,12 @@ class WatershedSerializer(serializers.ModelSerializer):
         model = Watershed
 
 
+class ContractorSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Contractor
+
+
 class LocationSerializer(ModelSerializer):
 
     class Meta:
