@@ -17,11 +17,11 @@ FIELD_NAME_MAP = {
     'Address_Clean': '',
     'Watershed': '',
     'Building Use': '',
-    'Solar over Ecoroof': '',
+    'Solar over Ecoroof': 'solar_over_ecoroof',
     'Type': '',
     'Year Built': 'year_built',
     'Size (sf)': 'square_footage',
-    'Number': '',
+    'Number': 'number_of_roofs',
     'Latitude(Non Obscured)': 'latitude',
     'Longitude (Non Obscured)': 'longitude',
     'Confidence (Non Obscured)': 'confidence',
@@ -188,6 +188,17 @@ class Importer:
             names.add(name)
 
             irrigated = self.as_bool(row['irrigated'], null=True)
+            solar_over_ecoroof = self.as_bool(row['solar_over_ecoroof'], null=True)
+
+            number_of_roofs = row['number_of_roofs']
+            if number_of_roofs is None:
+                self.warn('Number of roofs not set for location \
+                          "{name}" Using default value'.format_map(locals()))
+                field = Location._meta.get_field('number_of_roofs')
+                number_of_roofs = field.get_default()
+            else:
+                number_of_roofs = int(number_of_roofs)
+
 
             square_footage = row['square_footage']
             if square_footage is None:
@@ -235,6 +246,8 @@ class Importer:
                 point=point,
                 point_obscured=point_obscured,
                 irrigated=irrigated,
+                solar_over_ecoroof=solar_over_ecoroof,
+                number_of_roofs=number_of_roofs,
                 square_footage=square_footage,
                 year_built=year_built,
                 building_use=building_use,

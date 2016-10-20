@@ -41,6 +41,15 @@
             </div>
             <div ng-if="$ctrl.location.contractor">
                 Contractor: {{ $ctrl.location.contractor.name }}
+	    </div>
+            <div>
+                {{ $ctrl.location.number_of_roofs|number }} roof(s) at this location
+            </div>
+            <div ng-if="$ctrl.location.solar_over_ecoroof === null">
+                May have solar panels installed (unknown)
+            </div>
+            <div ng-if="$ctrl.location.solar_over_ecoroof !== null">
+                {{ $ctrl.location.solar_over_ecoroof 'Has' : 'Does not have' }} solar panels installed
             </div>
         </div>
     </md-content>
