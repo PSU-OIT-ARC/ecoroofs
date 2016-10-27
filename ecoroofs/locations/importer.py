@@ -19,7 +19,7 @@ FIELD_NAME_MAP = {
     'Watershed': '',
     'Building Use': '',
     'Solar over Ecoroof': 'solar_over_ecoroof',
-    'Type': '',
+    'Type': 'construction_type',
     'Year Built': 'year_built',
     'Size (sf)': 'square_footage',
     'Number': 'number_of_roofs',
@@ -104,6 +104,7 @@ class Importer:
         self.column_to_table(data, BuildingUse)
         self.column_to_table(data, Contractor)
         self.column_to_table(data, Watershed)
+        self.column_to_table(data, ConstructionType)
         self.insert_locations(data)
 
     def do_overwrite(self):
@@ -112,6 +113,7 @@ class Importer:
             BuildingUse,
             Contractor,
             Watershed,
+            ConstructionType,
         )
         for model in models_to_delete:
             self.print('Removing existing {model._meta.verbose_name_plural}...'.format(**locals()))
@@ -167,6 +169,7 @@ class Importer:
         building_uses = {r.name: r for r in BuildingUse.objects.all()}
         contractors = {r.name: r for r in Contractor.objects.all()}
         watersheds = {r.name: r for r in Watershed.objects.all()}
+        construction_types = {r.name: r for r in ConstructionType.objects.all()}
 
         # Used to keep track of names already used so we can ensure each
         # location has a unique name and slug.
@@ -236,6 +239,8 @@ class Importer:
             building_use = self.choice(row, 'building_use', building_uses)
             contractor = self.choice(row, 'contractor', contractors, null=True)
             watershed = self.choice(row, 'watershed', watersheds, null=True)
+            construction_type = self.choice(row, 'construction_type',
+                                            construction_types, null=True)
 
             # Actual coordinates
             coordinates = {'x': row['longitude'], 'y': row['latitude']}
@@ -269,6 +274,7 @@ class Importer:
                 building_use=building_use,
                 contractor=contractor,
                 watershed=watershed,
+                construction_type=construction_type,
             )
             location.set_neighborhood_automatically()
             locations.append(location)

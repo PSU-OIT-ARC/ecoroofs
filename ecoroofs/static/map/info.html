@@ -54,6 +54,9 @@
             <div ng-if="$ctrl.location.depth !== null">
               Depth: {{ $ctrl.location.depth }} inches
             </div>
+            <div ng-if="$ctrl.location.construction_type !== null">
+              Roof construction type: {{ $ctrl.location.construction_type.name }}
+            </div>
         </div>
     </md-content>
 </md-sidenav>

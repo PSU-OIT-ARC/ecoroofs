@@ -45,6 +45,13 @@ class WatershedSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class ConstructionTypeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = ConstructionType
+        fields = '__all__'
+
+
 class LocationSerializer(ModelSerializer):
 
     class Meta:
@@ -57,6 +64,7 @@ class LocationSerializer(ModelSerializer):
     watershed = WatershedSerializer()
     contractor = ContractorSerializer()
     depth = serializers.SerializerMethodField()
+    construction_type = ConstructionTypeSerializer()
 
     def get_depth(self, instance):
         """Format depth field as a string.

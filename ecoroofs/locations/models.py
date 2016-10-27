@@ -14,6 +14,7 @@ __all__ = [
     'BuildingUse',
     'Contractor',
     'Watershed',
+    'ConstructionType',
 ]
 
 
@@ -38,6 +39,7 @@ class Location(BaseModel):
     square_footage = models.PositiveIntegerField(null=True)
     year_built = models.PositiveSmallIntegerField(null=True, blank=True, verbose_name='Year built')
 
+    construction_type = models.ForeignKey('ConstructionType', null=True, blank=True)
     building_use = models.ForeignKey('BuildingUse')
     watershed = models.ForeignKey('Watershed', null=True, blank=True)
     contractor = models.ForeignKey('Contractor', null=True, blank=True)
@@ -79,5 +81,10 @@ class Contractor(BaseModel):
 
 
 class Watershed(BaseModel):
+
+    pass
+
+
+class ConstructionType(BaseModel):
 
     pass
