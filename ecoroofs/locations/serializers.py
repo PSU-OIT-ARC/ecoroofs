@@ -56,6 +56,19 @@ class LocationSerializer(ModelSerializer):
     neighborhood = NeighborhoodSerializer()
     watershed = WatershedSerializer()
     contractor = ContractorSerializer()
+    depth = serializers.SerializerMethodField()
+
+    def get_depth(self, instance):
+        """
+        Format depth as a string of one value or a range as needed.
+        Format values to only include significant digits.
+        """
+        depth = None
+        if instance.depth_min:
+            depth = "{0:g}".format(float(instance.depth_min))
+        if instance.depth_max and instance.depth_min != instance.depth_max:
+            depth = "{0} - {1:g}".format(depth, float(instance.depth_max))
+        return depth
 
 
 class PrivilegedLocationSerializer(LocationSerializer):

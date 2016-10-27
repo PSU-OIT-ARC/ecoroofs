@@ -31,6 +31,8 @@ class Location(BaseModel):
     solar_over_ecoroof = models.NullBooleanField()
     square_footage = models.PositiveIntegerField(null=True)
     year_built = models.PositiveSmallIntegerField(null=True, blank=True, verbose_name='Year built')
+    depth_min = models.DecimalField(null=True, blank=True, decimal_places=1, max_digits=5, verbose_name="Minimum depth in inches")
+    depth_max = models.DecimalField(null=True, blank=True, decimal_places=1, max_digits=5, verbose_name="Maximum depth in inches")
 
     building_use = models.ForeignKey('BuildingUse')
     watershed = models.ForeignKey('Watershed', null=True, blank=True)

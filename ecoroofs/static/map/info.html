@@ -51,6 +51,9 @@
             <div ng-if="$ctrl.location.solar_over_ecoroof !== null">
                 {{ $ctrl.location.solar_over_ecoroof ? 'Has' : 'Does not have' }} solar panels installed
             </div>
+            <div ng-if="$ctrl.location.depth !== null">
+              Depth: {{ $ctrl.location.depth }} inches
+            </div>
         </div>
     </md-content>
 </md-sidenav>

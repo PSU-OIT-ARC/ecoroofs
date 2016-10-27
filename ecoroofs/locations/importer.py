@@ -1,6 +1,8 @@
 import csv
 import re
 import time
+from decimal import Decimal
+
 from sys import stderr
 
 from arcutils.colorize import printer
@@ -28,7 +30,8 @@ FIELD_NAME_MAP = {
     'Latitude': 'latitude_obscured',
     'Longitude': 'longitude_obscured',
     'Confidence': 'confidence_obscured',
-    'Depth': '',
+    'Depth Min': 'depth_min',
+    'Depth Max': 'depth_max',
     'Cost': '',
     'Composition': '',
     'Irrigation': 'irrigated',
@@ -219,6 +222,22 @@ class Importer:
             else:
                 year_built = int(year_built)
 
+            depth_min = row['depth_min']
+            if depth_min is None:
+                self.warn(
+                    'Depth Min is not set for location "{name}"'
+                    .format_map(locals()))
+            else:
+                depth_min = Decimal(depth_min)
+
+            depth_max = row['depth_max']
+            if depth_max is None:
+                self.warn(
+                    'Depth Max is not set for location "{name}"'
+                    .format_map(locals()))
+            else:
+                depth_max = Decimal(depth_max)
+
             building_use = self.choice(row, 'building_use', building_uses)
             contractor = self.choice(row, 'contractor', contractors, null=True)
             watershed = self.choice(row, 'watershed', watersheds, null=True)
@@ -250,6 +269,8 @@ class Importer:
                 solar_over_ecoroof=solar_over_ecoroof,
                 square_footage=square_footage,
                 year_built=year_built,
+                depth_min=depth_min,
+                depth_max=depth_max,
                 building_use=building_use,
                 contractor=contractor,
                 watershed=watershed,
