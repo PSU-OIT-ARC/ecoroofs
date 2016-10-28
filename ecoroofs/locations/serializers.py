@@ -56,7 +56,7 @@ class LocationSerializer(ModelSerializer):
 
     class Meta:
         model = Location
-        exclude = ('point',)
+        exclude = ('point', 'address')
 
     point_obscured = PointSerializer()
     building_use = BuildingUseSerializer()

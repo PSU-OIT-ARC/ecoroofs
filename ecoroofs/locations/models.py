@@ -22,9 +22,17 @@ log = logging.getLogger(__name__)
 
 
 class Location(BaseModel):
+    """
+    Model for all eco-roof locations.
+    Certain fields should not be exposed to the public including:
+    point and address. An obscured field is used for these instead.
+    """
 
     point = PointField()
     point_obscured = PointField()
+
+    address = models.TextField(
+        null=True, blank=True, verbose_name='exact street address')
 
     depth_min = models.DecimalField(
         null=True, blank=True, decimal_places=1, max_digits=5,
@@ -43,7 +51,6 @@ class Location(BaseModel):
     building_use = models.ForeignKey('BuildingUse')
     watershed = models.ForeignKey('Watershed', null=True, blank=True)
     contractor = models.ForeignKey('Contractor', null=True, blank=True)
-
     neighborhood = models.ForeignKey('neighborhoods.Neighborhood', null=True, editable=False)
 
     def set_neighborhood_automatically(self):

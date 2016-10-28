@@ -13,7 +13,7 @@ from .models import *  # noqa
 # Map of CSV field names => model field names.
 FIELD_NAME_MAP = {
     'Project': 'name',
-    'Address': '',
+    'Address': 'address',
     'Address (Obscured)': '',
     'Address_Clean': '',
     'Watershed': '',
@@ -192,6 +192,12 @@ class Importer:
 
             names.add(name)
 
+            address = row['address']
+            if address is None:
+                self.warn('Address is not set for location "{name}"'.format_map(locals()))
+            else:
+                address = self.normalize_name(address)
+
             irrigated = self.as_bool(row['irrigated'], null=True)
             solar_over_ecoroof = self.as_bool(row['solar_over_ecoroof'], null=True)
 
@@ -264,6 +270,7 @@ class Importer:
                 name=name,
                 point=point,
                 point_obscured=point_obscured,
+                address=address,
                 depth_min=depth_min,
                 depth_max=depth_max,
                 irrigated=irrigated,
