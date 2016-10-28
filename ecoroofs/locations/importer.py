@@ -14,7 +14,7 @@ from .models import *  # noqa
 FIELD_NAME_MAP = {
     'Project': 'name',
     'Address': 'address',
-    'Address (Obscured)': '',
+    'Address (Obscured)': 'address_obscured',
     'Address_Clean': '',
     'Watershed': '',
     'Building Use': '',
@@ -192,11 +192,17 @@ class Importer:
 
             names.add(name)
 
+            # addresses
             address = row['address']
             if address is None:
                 self.warn('Address is not set for location "{name}"'.format_map(locals()))
             else:
                 address = self.normalize_name(address)
+            address_obscured = row['address_obscured']
+            if address_obscured is None:
+                self.warn('Obscured Address is not set for location "{name}"'.format_map(locals()))
+            else:
+                address_obscured = self.normalize_name(address_obscured)
 
             irrigated = self.as_bool(row['irrigated'], null=True)
             solar_over_ecoroof = self.as_bool(row['solar_over_ecoroof'], null=True)
@@ -271,6 +277,7 @@ class Importer:
                 point=point,
                 point_obscured=point_obscured,
                 address=address,
+                address_obscured=address_obscured,
                 depth_min=depth_min,
                 depth_max=depth_max,
                 irrigated=irrigated,

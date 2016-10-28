@@ -33,6 +33,9 @@ class Location(BaseModel):
 
     address = models.TextField(
         null=True, blank=True, verbose_name='exact street address')
+    address_obscured = models.TextField(
+            null=True, blank=True, verbose_name='obscured street address',
+            help_text="This street address is available to the public.")
 
     depth_min = models.DecimalField(
         null=True, blank=True, decimal_places=1, max_digits=5,
