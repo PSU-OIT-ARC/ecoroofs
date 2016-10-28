@@ -52,6 +52,13 @@ class ConstructionTypeSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class ConfidenceSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Confidence
+        fields = '__all__'
+
+
 class LocationSerializer(ModelSerializer):
 
     class Meta:
@@ -65,6 +72,7 @@ class LocationSerializer(ModelSerializer):
     contractor = ContractorSerializer()
     depth = serializers.SerializerMethodField()
     construction_type = ConstructionTypeSerializer()
+    confidence = ConfidenceSerializer()
 
     def get_depth(self, instance):
         """Format depth field as a string.
