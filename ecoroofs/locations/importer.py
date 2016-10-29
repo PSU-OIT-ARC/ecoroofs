@@ -207,6 +207,12 @@ class Importer:
             else:
                 address_obscured = self.normalize_name(address_obscured)
 
+            # textfields
+            composition = row['composition']
+            plants = row['plants']
+            drainage = row['drainage']
+            maintenance = row['maintenance']
+
             irrigated = self.as_bool(row['irrigated'], null=True)
             solar_over_ecoroof = self.as_bool(row['solar_over_ecoroof'], null=True)
 
@@ -258,6 +264,7 @@ class Importer:
                                             construction_types, null=True)
             confidence = self.choice(row, 'confidence', confidences, null=True)
 
+
             # Actual coordinates
             coordinates = {'x': row['longitude'], 'y': row['latitude']}
             point = 'POINT({x} {y})'.format_map(coordinates)
@@ -290,6 +297,10 @@ class Importer:
                 square_footage=square_footage,
                 year_built=year_built,
                 building_use=building_use,
+                composition=composition,
+                plants=plants,
+                drainage=drainage,
+                maintenance=maintenance,
                 contractor=contractor,
                 confidence=confidence,
                 watershed=watershed,

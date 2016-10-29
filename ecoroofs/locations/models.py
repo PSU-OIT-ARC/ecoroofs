@@ -58,6 +58,11 @@ class Location(BaseModel):
     contractor = models.ForeignKey('Contractor', null=True, blank=True)
     neighborhood = models.ForeignKey('neighborhoods.Neighborhood', null=True, editable=False)
 
+    composition = models.TextField(null=True, blank=True)
+    plants = models.TextField(null=True, blank=True)
+    drainage = models.TextField(null=True, blank=True)
+    maintenance = models.TextField(null=True, blank=True)
+
     def set_neighborhood_automatically(self):
         """Set neighborhood via spatial contains query.
 
@@ -83,6 +88,11 @@ def set_neighborhood(sender, instance: Location, **kwargs):
 
 
 class BuildingUse(BaseModel):
+
+    pass
+
+
+class Composition(BaseModel):
 
     pass
 
