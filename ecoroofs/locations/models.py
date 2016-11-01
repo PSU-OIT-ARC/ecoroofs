@@ -14,6 +14,8 @@ __all__ = [
     'BuildingUse',
     'Contractor',
     'Watershed',
+    'ConstructionType',
+    'Confidence',
 ]
 
 
@@ -21,9 +23,20 @@ log = logging.getLogger(__name__)
 
 
 class Location(BaseModel):
+    """
+    Model for all eco-roof locations.
+    Certain fields should not be exposed to the public including:
+    point and address. An obscured field is used for these instead.
+    """
 
     point = PointField()
     point_obscured = PointField()
+
+    address = models.TextField(
+        null=True, blank=True, verbose_name='exact street address')
+    address_obscured = models.TextField(
+            null=True, blank=True, verbose_name='obscured street address',
+            help_text="This street address is available to the public.")
 
     depth_min = models.DecimalField(
         null=True, blank=True, decimal_places=1, max_digits=5,
@@ -38,11 +51,17 @@ class Location(BaseModel):
     square_footage = models.PositiveIntegerField(null=True)
     year_built = models.PositiveSmallIntegerField(null=True, blank=True, verbose_name='Year built')
 
+    construction_type = models.ForeignKey('ConstructionType', null=True, blank=True)
+    confidence = models.ForeignKey('Confidence', null=True, blank=True)
     building_use = models.ForeignKey('BuildingUse')
     watershed = models.ForeignKey('Watershed', null=True, blank=True)
     contractor = models.ForeignKey('Contractor', null=True, blank=True)
-
     neighborhood = models.ForeignKey('neighborhoods.Neighborhood', null=True, editable=False)
+
+    composition = models.TextField(null=True, blank=True)
+    plants = models.TextField(null=True, blank=True)
+    drainage = models.TextField(null=True, blank=True)
+    maintenance = models.TextField(null=True, blank=True)
 
     def set_neighborhood_automatically(self):
         """Set neighborhood via spatial contains query.
@@ -73,11 +92,26 @@ class BuildingUse(BaseModel):
     pass
 
 
+class Composition(BaseModel):
+
+    pass
+
+
 class Contractor(BaseModel):
 
     pass
 
 
 class Watershed(BaseModel):
+
+    pass
+
+
+class ConstructionType(BaseModel):
+
+    pass
+
+
+class Confidence(BaseModel):
 
     pass

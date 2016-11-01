@@ -26,6 +26,7 @@
         <md-divider></md-divider>
 
         <div ng-show="$ctrl.location.$resolved" layout="column" layout-padding>
+            <div>Address: {{ $ctrl.location.address_obscured }}</div>
             <div>{{ $ctrl.location.neighborhood.name }} neighborhood</div>
             <div>{{ $ctrl.location.building_use.name }} usage</div>
             <div>{{ $ctrl.location.square_footage|number }} sq. ft.</div>
@@ -54,6 +55,14 @@
             <div ng-if="$ctrl.location.depth !== null">
               Depth: {{ $ctrl.location.depth }} inches
             </div>
+            <div ng-if="$ctrl.location.construction_type">
+              Roof construction type: {{ $ctrl.location.construction_type.name }}
+            </div>
+            <div>Confidence: {{ $ctrl.location.confidence.name }}</div>
+            <div>Roof composition: {{ $ctrl.location.composition }}</div>
+            <div>Plants: {{ $ctrl.location.plants }}</div>
+            <div>Maintenance plan: {{ $ctrl.location.maintenance }}</div>
+            <div>Drainage description: {{ $ctrl.location.drainage }}</div>
         </div>
     </md-content>
 </md-sidenav>
