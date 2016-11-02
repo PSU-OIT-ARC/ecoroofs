@@ -1,29 +1,31 @@
 {
-    "name": "ecoroofs",
-    "version": "1.0.0-dev.0",
-    "description": "EcoRoofs",
-    "repository": "https://github.com/PSU-OIT-ARC/ecoroofs",
-    "license": "UNLICENSED",
-    "dependencies": {
-        "angular": "~1.5.8",
-        "angular-animate": "~1.5.8",
-        "angular-aria": "~1.5.8",
-        "angular-material": "~1.1.1",
-        "angular-messages": "~1.5.8",
-        "angular-resource": "~1.5.8",
-        "angular-route": "~1.5.8",
-        "openlayers": "^3.18.2"
-    },
-    "devDependencies": {
-        "autoprefixer": "^6.4.1",
-        "babel-core": "^6.13.2",
-        "clean-css": "^3.4.19",
-        "core-js": "^2.4.0",
-        "node-sass": "^3.10.0",
-        "postcss-cli": "^2.6.0",
-        "systemjs": "^0.19.38",
-        "systemjs-builder": "^0.15.31",
-        "systemjs-plugin-babel": "^0.0.15",
-        "systemjs-plugin-text": "^0.0.9"
-    }
+  "name": "ecoroofs",
+  "version": "1.0.0-dev.0",
+  "description": "EcoRoofs",
+  "repository": "https://github.com/PSU-OIT-ARC/ecoroofs",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "angular": "~1.5.8",
+    "angular-animate": "~1.5.8",
+    "angular-aria": "~1.5.8",
+    "angular-material": "~1.1.1",
+    "angular-messages": "~1.5.8",
+    "angular-resource": "~1.5.8",
+    "angular-route": "~1.5.8",
+    "openlayers": "^3.18.2"
+  },
+  "devDependencies": {
+    "autoprefixer": "^6.4.1",
+    "babel-core": "^6.13.2",
+    "browser-sync": "^2.17.5",
+    "clean-css": "^3.4.19",
+    "core-js": "^2.4.0",
+    "gulp": "^3.9.1",
+    "node-sass": "^3.10.0",
+    "postcss-cli": "^2.6.0",
+    "systemjs": "^0.19.38",
+    "systemjs-builder": "^0.15.31",
+    "systemjs-plugin-babel": "^0.0.15",
+    "systemjs-plugin-text": "^0.0.9"
+  }
 }

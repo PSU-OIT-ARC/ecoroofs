@@ -1,9 +1,17 @@
 @import "node_modules/angular-material/angular-material.scss";
 @import "variables.scss";
 
+@mixin float_full() {
+	float: left;
+	position: relative;
+	width: 100%;
+}
+
 [ng-cloak] {
     display: none;
 }
+
+body * { box-sizing: border-box; }
 
 html, body {
     height: 100%;
@@ -12,9 +20,15 @@ html, body {
     padding: 0;
 }
 
-a, a md-icon, a md-icon.md-default-theme {
+a:link, a:visited,
+a md-icon:link, a md-icon:visited,
+a md-icon.md-default-theme:link, a md-icon.md-default-theme:visited {
     color: $psu-blue;
     text-decoration: none;
+
+    &:hover {
+      color: lighten($psu-blue, 10%)
+    }
 }
 
 .invisible {
@@ -34,6 +48,14 @@ a, a md-icon, a md-icon.md-default-theme {
     height: auto;
 }
 
+.experiment-head {
+  float:left;
+  position:relative;
+  width:100%;
+  background-color:orange;
+  height:80px;
+}
+
 // Global activity indicator
 #activity-indicator {
     position: absolute;
@@ -43,7 +65,7 @@ a, a md-icon, a md-icon.md-default-theme {
 
 [ng-view] {
     position: absolute;
-    top: 64px;
+    top: 64px + 80px;
     right: 0;
     bottom: 0;
     left: 0;
@@ -63,11 +85,7 @@ ecoroofs-map-search {
     right: 67%;
     left: 8px;
     min-width: 400px;
-
     z-index: 20;
-
-    box-sizing: border-box;
-
     background-color: white;
     border-radius: 2px;
     box-shadow: 2px 2px 4px;
@@ -93,6 +111,41 @@ ecoroofs-map-search {
         font-size: 12px;
         padding: 4px 16px;
     }
+}
+
+
+
+.md-sidenav-right {
+  width:420px;
+
+  table.md-sidebar--data {
+    @include float_full();
+    font-size:.9em;
+    line-height:1.3em;
+
+
+    .medrow {width:35%;}
+
+    td.data--label {
+      font-size: .7em;
+      color:#666;
+      text-align:right;
+      padding-right:20px;
+      text-transform:uppercase;
+      letter-spacing: 1px;
+			vertical-align: top;
+    }
+
+    td {
+      padding:7px 0px;
+      border-bottom:1px solid #eee !important;
+    }
+
+  }
+
+
+
+
 }
 
 /* Mobile Overrides */

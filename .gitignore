@@ -16,6 +16,8 @@
 /*/static/bundles/
 /*/static/node_modules/
 /*/static/**/*.css
+*.DS_Store
+
 
 # Anywhere
 __pycache__/
