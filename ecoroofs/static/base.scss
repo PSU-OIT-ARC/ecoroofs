@@ -20,6 +20,13 @@ html, body {
     padding: 0;
 }
 
+h1 {
+	font-family: 'Roboto Slab', serif;
+	font-weight: 700;
+	color: lighten($psu-green, 40%);
+	font-size:2.5em;
+}
+
 a:link, a:visited,
 a md-icon:link, a md-icon:visited,
 a md-icon.md-default-theme:link, a md-icon.md-default-theme:visited {
@@ -31,30 +38,32 @@ a md-icon.md-default-theme:link, a md-icon.md-default-theme:visited {
     }
 }
 
-.invisible {
-    visibility: hidden;
+header {
+	@include float_full();
+  background-color:$psu-green;
+  height:145px;
+	padding:0px 15px;
 }
 
-.standard-padding {
-    padding: 8px 16px;
+.toolbar__auth {
+	position:absolute;
+	top:15px;
+	right:15px;
+	width:30%;
+	text-align:right;
+	color:white;
 }
 
-.no-margin {
-    margin: 0;
+.toolbar__totals {
+	position:absolute;
+	bottom: 10px;
+	right:15px;
+	width:30%;
+	text-align:right;
 }
 
-.img-responsive {
-    max-width: 100%;
-    height: auto;
-}
 
-.experiment-head {
-  float:left;
-  position:relative;
-  width:100%;
-  background-color:orange;
-  height:80px;
-}
+
 
 // Global activity indicator
 #activity-indicator {
@@ -113,18 +122,25 @@ ecoroofs-map-search {
     }
 }
 
-
+md-content {
+	animation: simple-opacity 5s forwards;
+	animation-fill-mode:both;
+}
 
 .md-sidenav-right {
-  width:420px;
+  width:420px; //overrides md 320
 
   table.md-sidebar--data {
     @include float_full();
     font-size:.9em;
     line-height:1.3em;
 
+		td {
+			padding:7px 0px;
+			border-bottom:1px solid #eee !important;
+		}
 
-    .medrow {width:35%;}
+		td.medrow {width:35%;}
 
     td.data--label {
       font-size: .7em;
@@ -135,17 +151,7 @@ ecoroofs-map-search {
       letter-spacing: 1px;
 			vertical-align: top;
     }
-
-    td {
-      padding:7px 0px;
-      border-bottom:1px solid #eee !important;
-    }
-
   }
-
-
-
-
 }
 
 /* Mobile Overrides */
@@ -191,4 +197,30 @@ ecoroofs-map-search {
     right: 8px;
     top: auto;
     left: auto;
+}
+
+/* SIMPLE ANIMATIONS */
+
+@keyframes simple-opacity {
+  0%   { opacity:.5; }
+  100% { opacity: 1;}
+}
+
+/* UTILITIES */
+
+.invisible {
+    visibility: hidden;
+}
+
+.standard-padding {
+    padding: 8px 16px;
+}
+
+.no-margin {
+    margin: 0;
+}
+
+.img-responsive {
+    max-width: 100%;
+    height: auto;
 }

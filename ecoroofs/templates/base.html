@@ -12,7 +12,8 @@
 
         {% block css %}
             {% block cdn_css %}
-                <link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic" rel="stylesheet">
+            <link href="https://fonts.googleapis.com/css?family=Mate|Roboto|Roboto+Slab" rel="stylesheet">
+                
                 <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
                 {% for cdn_url in CDN_URLS.css %}
                     <link href="{% cdn_url cdn_url %}" rel="stylesheet">
