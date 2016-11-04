@@ -20,38 +20,57 @@ html, body {
     padding: 0;
 }
 
+a:link, a:visited {
+  color: $psu-blue;
+  text-decoration: none;
+
+  &:hover {
+    color: lighten($psu-blue, 10%)
+  }
+}
+
 h1 {
 	font-family: 'Roboto Slab', serif;
 	font-weight: 700;
 	color: lighten($psu-green, 40%);
-	font-size:2.5em;
+	font-size:2.8em;
+	width:50%;
+	margin:0px;
 }
 
-a:link, a:visited,
-a md-icon:link, a md-icon:visited,
-a md-icon.md-default-theme:link, a md-icon.md-default-theme:visited {
-    color: $psu-blue;
-    text-decoration: none;
-
-    &:hover {
-      color: lighten($psu-blue, 10%)
-    }
+h3 {
+	font-family: 'Roboto Slab', serif;
+	font-weight: 400;
+	color: lighten($psu-green, 70%);
+	font-size:1.3em;
+	margin-top:5px;
 }
 
 header {
 	@include float_full();
   background-color:$psu-green;
-  height:145px;
-	padding:0px 15px;
+  height:130px;
+	padding:10px 15px;
 }
 
 .toolbar__auth {
 	position:absolute;
-	top:15px;
-	right:15px;
+	top:18px;
+	right:5px;
 	width:30%;
 	text-align:right;
 	color:white;
+	line-height:1.7em;
+
+	a:link, a:visited {
+		color: lighten($psu-green, 40%);
+		margin-right:20px;
+		font-weight:bold;
+
+		&:hover {
+			color: lighten($psu-green, 70%);
+		}
+	}
 }
 
 .toolbar__totals {
@@ -62,69 +81,80 @@ header {
 	text-align:right;
 }
 
+md-icon.md-default-theme, md-icon.material-icons {
+  fill: white;
+}
 
-
-
-// Global activity indicator
-#activity-indicator {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
+header .material-icons {
+	margin-left:5px;
+	margin-top:-4px;
+	font-size:27px;
+	color: lighten($psu-green, 40%);
 }
 
 [ng-view] {
-    position: absolute;
-    top: 64px + 80px;
-    right: 0;
-    bottom: 0;
-    left: 0;
+  position: absolute;
+  top: 130px;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }
 
+/* Mobile Overrides */
+@media (max-width: $layout-breakpoint-sm - 1px) and (orientation: portrait) {
+    [ng-view] {
+        top: 56px;
+    }
+}
+@media (max-width: $layout-breakpoint-sm - 1px) and (orientation: landscape) {
+    [ng-view] {
+        top: 48px;
+    }
+}
+
+
+
+
 ecoroofs-map {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }
 
 ecoroofs-map-search {
-    position: absolute;
-    top: 8px;
-    right: 67%;
-    left: 8px;
-    min-width: 400px;
-    z-index: 20;
-    background-color: white;
-    border-radius: 2px;
-    box-shadow: 2px 2px 4px;
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  min-width: 400px;
+  z-index: 20;
+  background-color: white;
+  border-radius: 2px;
+  box-shadow: 2px 2px 4px;
 
-    form {
-        margin: 0;
-        margin-left: 16px;
-        padding: 0;
-        input {
-            border: none;
-            outline: none;
-            margin: 0;
-            padding: 0;
-            font-size: 14px;
-            width: 100%;
-        }
-        .md-button.md-icon-button {
-            margin: 0;
-        }
+  form {
+    margin: 0;
+    margin-left: 16px;
+    padding: 0;
+
+    input {
+      border: none;
+      outline: none;
+      margin: 0;
+      padding: 0;
+      font-size: 14px;
+      width: 100%;
     }
-
-    .search-meta-info {
-        font-size: 12px;
-        padding: 4px 16px;
+    .md-button.md-icon-button {
+      margin: 0;
     }
-}
+  }
 
-md-content {
-	animation: simple-opacity 5s forwards;
-	animation-fill-mode:both;
+  .search-meta-info {
+    font-size: 12px;
+    padding: 4px 16px;
+  }
 }
 
 .md-sidenav-right {
@@ -132,8 +162,12 @@ md-content {
 
   table.md-sidebar--data {
     @include float_full();
+		width:95%;
     font-size:.9em;
     line-height:1.3em;
+		animation: simple-opacity 300ms forwards;
+		animation-fill-mode:both;
+
 
 		td {
 			padding:7px 0px;
@@ -154,17 +188,7 @@ md-content {
   }
 }
 
-/* Mobile Overrides */
-@media (max-width: $layout-breakpoint-sm - 1px) and (orientation: portrait) {
-    [ng-view] {
-        top: 56px;
-    }
-}
-@media (max-width: $layout-breakpoint-sm - 1px) and (orientation: landscape) {
-    [ng-view] {
-        top: 48px;
-    }
-}
+
 @media (max-width: 399px) {
     ecoroofs-map-search {
         right: 8px;
@@ -202,25 +226,23 @@ md-content {
 /* SIMPLE ANIMATIONS */
 
 @keyframes simple-opacity {
-  0%   { opacity:.5; }
+  0%   { opacity:.1; }
   100% { opacity: 1;}
 }
 
 /* UTILITIES */
 
-.invisible {
-    visibility: hidden;
-}
-
-.standard-padding {
-    padding: 8px 16px;
-}
-
-.no-margin {
-    margin: 0;
-}
-
+.invisible { visibility: hidden;}
+.standard-padding { padding: 8px 16px; }
+.no-margin { margin: 0; }
 .img-responsive {
     max-width: 100%;
     height: auto;
+}
+
+// Global activity indicator
+#activity-indicator {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }

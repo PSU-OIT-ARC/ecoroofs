@@ -1,5 +1,10 @@
 <header>
-  <h1 ng-click="$ctrl.openSidenav()">Portland Ecoroof Project</h1>
+  <h1 ng-click="$ctrl.openSidenav()">Portland Ecoroof Map</h1>
+  <h3>Locate and explore
+      <span class="total__ft2">{{ $ctrl.totalSquareFootage|number }} ft<sup>2</sup></span>
+      <span class="total__m2" style="display:none;">{{ $ctrl.totalSquareFootage * 0.093 | number }} ft<sup>2</sup></span>
+      of ecoroofs in Portland, OR
+  </h3>
 
   <div class="toolbar__auth">
     <div ng-if="!$ctrl.user.isAuthenticated">
@@ -9,23 +14,18 @@
     </div>
 
     <div ng-if="$ctrl.user.isAuthenticated">
-        <span><b>{{ $ctrl.user.fullName }}</b></span>
         <a href="/admin/" ng-if="$ctrl.user.isStaff">Admin</a>
+        <span><b>{{ $ctrl.user.fullName }}</b></span>
         <a href="/logout" title="Log out">
           <md-icon class="logout__btn">exit_to_app</md-icon>
         </a>
     </div>
   </div>
 
-
-<div class="toolbar__totals" ng-if="$ctrl.totalSquareFootage" hide-xs>
-  <span class="total__ft2">{{ $ctrl.totalSquareFootage|number }} ft<sup>2</sup></span>
-  <span class="total__m2" style="display:none;">{{ $ctrl.totalSquareFootage * 0.093 | number }} ft<sup>2</sup></span>
-</div>
-
-<div id="activity-indicator" class="invisible">
-    <md-progress-linear md-mode="indeterminate"></md-progress-linear>
-</div>
-
+  <div class="toolbar__totals" ng-if="$ctrl.totalSquareFootage" hide-xs>
+    <div id="activity-indicator" class="invisible">
+        <md-progress-linear md-mode="indeterminate"></md-progress-linear>
+    </div>
+  </div>
 
 </header>

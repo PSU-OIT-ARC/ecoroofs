@@ -5,7 +5,7 @@
 
 <html>
     <head>
-        <title>{{ PROJECT.title }}</title>
+        <title>The Portland Ecoroof Map, Portland, Oregon</title>
 
         <meta charset="utf-8">
         <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
@@ -13,7 +13,7 @@
         {% block css %}
             {% block cdn_css %}
             <link href="https://fonts.googleapis.com/css?family=Mate|Roboto|Roboto+Slab" rel="stylesheet">
-                
+
                 <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
                 {% for cdn_url in CDN_URLS.css %}
                     <link href="{% cdn_url cdn_url %}" rel="stylesheet">
