@@ -3,22 +3,21 @@
   <h3>Locate and explore
       <span class="total__ft2">{{ $ctrl.totalSquareFootage|number }} ft<sup>2</sup></span>
       <span class="total__m2" style="display:none;">{{ $ctrl.totalSquareFootage * 0.093 | number }} ft<sup>2</sup></span>
-      of ecoroofs in Portland, OR
+      of ecoroofs in Portland, OR. <a href="!/pages/about" ng-click="$ctrl.close()">Learn more ... </a>
+
   </h3>
 
   <div class="toolbar__auth">
     <div ng-if="!$ctrl.user.isAuthenticated">
-        <a title="Log in" href="/login">
-            <md-icon>account_circle</md-icon>
-        </a>
+      <a title="Log in" href="/login">
+        <md-icon>account_circle</md-icon>
+      </a>
     </div>
 
     <div ng-if="$ctrl.user.isAuthenticated">
-        <a href="/admin/" ng-if="$ctrl.user.isStaff">Admin</a>
-        <span><b>{{ $ctrl.user.fullName }}</b></span>
-        <a href="/logout" title="Log out">
-          <md-icon class="logout__btn">exit_to_app</md-icon>
-        </a>
+      {{ $ctrl.user.fullName }}
+      <a href="/admin/" ng-if="$ctrl.user.isStaff">Admin</a> |
+      <a href="/logout" title="Log out">Log Out</a>
     </div>
   </div>
 
