@@ -2,7 +2,9 @@
             md-component-id="sidenav-map-info"
             md-disable-backdrop
             md-whiteframe="4">
+
     <md-content layout="column">
+
         <div layout="row" layout-align="start center">
             <h2 class="md-title no-margin standard-padding" flex>Location</h2>
             <md-button title="Hide sidebar"
@@ -24,10 +26,6 @@
         </div>
 
         <md-divider></md-divider>
-
-
-
-
 
         <div ng-show="$ctrl.location.$resolved" layout="column" layout-padding>
 
@@ -91,18 +89,15 @@
               <td>{{ $ctrl.location.construction_type.name }}</td>
             </tr>
 
-
             <tr ng-if="$ctrl.location.confidence.name">
               <td class="medrow data--label">Confidence</td>
               <td>{{ $ctrl.location.confidence.name }}</td>
             </tr>
 
-
             <tr ng-if="$ctrl.location.composition">
               <td class="medrow data--label">Composition</td>
               <td>{{ $ctrl.location.composition }}</td>
             </tr>
-
 
             <tr ng-if="$ctrl.location.plants">
               <td class="medrow data--label">Plants</td>
@@ -114,15 +109,12 @@
               <td>{{ $ctrl.location.maintenance }}</td>
             </tr>
 
-
             <tr ng-if="$ctrl.location.drainage">
               <td class="medrow data--label">Drainage</td>
               <td>{{ $ctrl.location.drainage }}</td>
             </tr>
 
-
           </table>
-
         </div>
     </md-content>
 </md-sidenav>

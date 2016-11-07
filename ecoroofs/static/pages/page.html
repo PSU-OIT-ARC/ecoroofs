@@ -1,9 +1,18 @@
 <md-content class="standard-padding" ng-cloak>
-    <h2 class="md-title">{{ $ctrl.page.name }}</h2>
+
+    <h2 ng-click="$ctrl.openSidenav()" class="md-title">{{ $ctrl.page.name }}</h2>
+
     <p class="md-subhead" ng-if="$ctrl.page.description">
         {{ $ctrl.page.description }}
     </p>
+
     <div class="md-body-1">
         {{ $ctrl.page.content }}
     </div>
+
+    <p><img src="/static/cop-bes-logo.png" style="width:300px;height:auto;"/></p>
+
+    <p>&copy; 2016 Portland State University</p>
+
+
 </md-content>

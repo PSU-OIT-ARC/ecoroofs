@@ -29,21 +29,25 @@ a:link, a:visited {
   }
 }
 
-h1 {
+h1, h2, h3 {
 	font-family: 'Roboto Slab', serif;
+	font-weight: 400;
+}
+
+h1 {
 	font-weight: 700;
 	color: lighten($psu-green, 40%);
-	font-size:2.8em;
+	font-size:3em;
 	width:50%;
 	margin:0px;
 }
 
 h3 {
-	font-family: 'Roboto Slab', serif;
-	font-weight: 400;
 	color: lighten($psu-green, 70%);
 	font-size:1.3em;
 	margin-top:5px;
+
+	a {margin-left:10px;}
 }
 
 header {
@@ -51,24 +55,33 @@ header {
   background-color:$psu-green;
   height:130px;
 	padding:10px 15px;
+
+	a:link, a:visited {
+		color: lighten($psu-green, 40%);
+
+		&:hover {
+			color: lighten($psu-green, 60%);
+		}
+	}
 }
 
 .toolbar__auth {
 	position:absolute;
 	top:18px;
-	right:5px;
-	width:30%;
+	right:8px;
+	width:50%;
 	text-align:right;
 	color:white;
 	line-height:1.7em;
+	font-weight:700;
+	font-size:.9em;
 
 	a:link, a:visited {
-		color: lighten($psu-green, 40%);
-		margin-right:20px;
-		font-weight:bold;
+		color: lighten($psu-green, 60%);
+		margin:0px 7px;
 
 		&:hover {
-			color: lighten($psu-green, 70%);
+			color: white;
 		}
 	}
 }
@@ -98,22 +111,11 @@ header .material-icons {
   right: 0;
   bottom: 0;
   left: 0;
+	animation: simple-opacity 200ms forwards;
+	animation-fill-mode:both;
 }
 
-/* Mobile Overrides */
-@media (max-width: $layout-breakpoint-sm - 1px) and (orientation: portrait) {
-    [ng-view] {
-        top: 56px;
-    }
-}
-@media (max-width: $layout-breakpoint-sm - 1px) and (orientation: landscape) {
-    [ng-view] {
-        top: 48px;
-    }
-}
-
-
-
+md-content { min-height:800px; }
 
 ecoroofs-map {
   position: absolute;
@@ -188,14 +190,6 @@ ecoroofs-map-search {
   }
 }
 
-
-@media (max-width: 399px) {
-    ecoroofs-map-search {
-        right: 8px;
-        min-width: 200px;
-    }
-}
-
 // XXX: Why does OL use ems for positioning controls?
 .ol-control button {
     width: 32px;
@@ -223,6 +217,49 @@ ecoroofs-map-search {
     left: auto;
 }
 
+
+/* Mobile Overrides */
+
+.mobshow { display:none; }
+
+@media (max-width: $layout-breakpoint-sm - 1px) and (orientation: portrait) {
+  [ng-view] {
+    top: 95px;
+  }
+
+	header {height: 95px;}
+
+	h1 {
+		font-size:2em;
+		width:60%;
+		line-height: 1.1em;
+	}
+
+	h3 {
+		display:none;
+	}
+
+	ecoroofs-map-search {
+		top: 0px;
+	  left: 0px;
+	  min-width: 100%;
+		width:100%;
+	}
+
+	.mobshow {display:block;}
+}
+
+.learn-more {
+	position:absolute;
+	bottom:15px;
+	right:10px;
+	text-align: right;
+	z-index: 999;
+}
+
+
+
+
 /* SIMPLE ANIMATIONS */
 
 @keyframes simple-opacity {
@@ -235,10 +272,6 @@ ecoroofs-map-search {
 .invisible { visibility: hidden;}
 .standard-padding { padding: 8px 16px; }
 .no-margin { margin: 0; }
-.img-responsive {
-    max-width: 100%;
-    height: auto;
-}
 
 // Global activity indicator
 #activity-indicator {

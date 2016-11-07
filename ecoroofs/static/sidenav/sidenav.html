@@ -20,12 +20,6 @@
 
         <md-divider></md-divider>
 
-        <div ng-if="!$ctrl.user.isAuthenticated" layout="column" layout-padding>
-            <a title="Log in" href="/login">
-                <md-icon>account_circle</md-icon>
-                Log in
-            </a>
-        </div>
 
         <div ng-if="$ctrl.user.isAuthenticated" layout="column" layout-padding>
             <span><b>{{ $ctrl.user.fullName }}</b></span>
@@ -36,16 +30,5 @@
             </a>
         </div>
 
-        <md-divider></md-divider>
-
-        <div class="standard-padding">
-            <img src="/static/cop-bes-logo.png" class="img-responsive">
-        </div>
-
-        <md-divider></md-divider>
-
-        <div layout="column" layout-padding>
-            <span>&copy; 2016 Portland State University</span>
-        </div>
     </md-content>
 </md-sidenav>
