@@ -34,22 +34,27 @@
               <td class="medrow data--label">Address</td>
               <td>{{ $ctrl.location.address_obscured }}</td>
             </tr>
+            
             <tr>
               <td class="medrow data--label">Neighborhood</td>
               <td>{{ $ctrl.location.neighborhood.name }} </td>
             </tr>
+
             <tr>
               <td class="medrow data--label">Usage</td>
               <td>{{ $ctrl.location.building_use.name }}</td>
             </tr>
+
             <tr>
               <td class="medrow data--label">Size</td>
               <td>{{ $ctrl.location.square_footage|number }} ft<sup>2</sup>&nbsp;&nbsp;({{ $ctrl.location.square_footage * 0.093 | number}} m<sup>2</sup>)</td>
             </tr>
+
             <tr ng-if="$ctrl.location.year_built !== null">
               <td class="medrow data--label">Year Built</td>
               <td>{{ $ctrl.location.year_built }}</td>
             </tr>
+
             <tr ng-if="$ctrl.location.watershed">
               <td class="medrow data--label">Watershed Name</td>
               <td>{{ $ctrl.location.watershed.name }}</td>
