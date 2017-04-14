@@ -38,7 +38,7 @@ h1 {
 	font-weight: 700;
 	color: lighten($psu-green, 40%);
 	font-size:3em;
-	width:50%;
+	width:70%;
 	margin:0px;
 }
 
@@ -117,7 +117,40 @@ header .material-icons {
 	animation-fill-mode:both;
 }
 
-md-content { min-height:800px; }
+md-content {
+	min-height:800px;
+	@include float_full;
+	background-color:white;
+}
+
+h3.md-subhead {
+	font-size:1.5em;
+	line-height: 1.2em;
+	color: $psu-green;
+	margin-top:1em;
+}
+
+.page-close {
+	float:right;
+	font-size:.7em;
+	font-family:monospace;
+
+	a:link, a:visited {
+		color:#666;
+	}
+	a:hover {color:black;}
+}
+
+.divider {
+	@include float_full;
+}
+
+.logos {
+	margin:1em 0;
+	width:300px;
+	height:auto;
+	float:left;
+}
 
 ecoroofs-map {
   position: absolute;
@@ -232,13 +265,19 @@ ecoroofs-map-search {
 	header {height: 95px;}
 
 	h1 {
-		font-size:2em;
-		width:60%;
+		font-size:2.2em;
+		width:65%;
 		line-height: 1.1em;
 	}
 
-	h3 {
+	header h3 {
 		display:none;
+	}
+
+	.logos {
+		margin:1em 0;
+		width:45%;
+		height:auto;
 	}
 
 	ecoroofs-map-search {
