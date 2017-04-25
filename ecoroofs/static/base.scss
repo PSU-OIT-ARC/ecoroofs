@@ -37,24 +37,24 @@ h1, h2, h3 {
 h1 {
 	font-weight: 700;
 	color: lighten($psu-green, 40%);
-	font-size:3em;
-	width:70%;
-	margin:0px;
+	font-size: 3em;
+	width: 70%;
+	margin: 0px;
 }
 
 h3 {
 	color: lighten($psu-green, 70%);
-	font-size:1.3em;
-	margin-top:5px;
+	font-size: 1.3em;
+	margin-top: 5px;
 
-	a {margin-left:10px;}
+	a {margin-left: 10px;}
 }
 
 header {
 	@include float_full();
-  background-color:$psu-green;
-  height:130px;
-	padding:10px 15px;
+  background-color: $psu-green;
+  height: 130px;
+	padding: 10px 15px;
 
 	a:link, a:visited {
 		color: lighten($psu-green, 40%);
@@ -66,19 +66,19 @@ header {
 }
 
 .toolbar__auth {
-	position:absolute;
-	top:18px;
-	right:8px;
-	width:50%;
-	text-align:right;
-	color:white;
-	line-height:1.7em;
-	font-weight:700;
-	font-size:.9em;
+	position: absolute;
+	top: 18px;
+	right: 8px;
+	width: 50%;
+	text-align: right;
+	color: white;
+	line-height: 1.7em;
+	font-weight: 700;
+	font-size: .9em;
 
 	a:link, a:visited {
 		color: lighten($psu-green, 60%);
-		margin:0px 7px;
+		margin: 0px 7px;
 
 		&:hover {
 			color: white;
@@ -87,9 +87,9 @@ header {
 }
 
 .toolbar__learn-more {
-	position:absolute;
-	bottom:15px;
-	right:10px;
+	position: absolute;
+	bottom: 15px;
+	right: 10px;
 	text-align: right;
 	z-index: 999;
 }
@@ -101,9 +101,9 @@ md-icon.md-default-theme, md-icon.material-icons {
 }
 
 header .material-icons {
-	margin-left:5px;
-	margin-top:-4px;
-	font-size:27px;
+	margin-left: 5px;
+	margin-top: -4px;
+	font-size: 27px;
 	color: lighten($psu-green, 40%);
 }
 
@@ -118,27 +118,33 @@ header .material-icons {
 }
 
 md-content {
-	min-height:800px;
+	min-height: 800px;
 	@include float_full;
-	background-color:white;
+	background-color: white;
+}
+
+.md-body-1 p {
+	padding-right: 20%;
 }
 
 h3.md-subhead {
-	font-size:1.5em;
+	font-size: 1.5em;
 	line-height: 1.2em;
 	color: $psu-green;
-	margin-top:1em;
+	margin-top: 1em;
 }
 
 .page-close {
-	float:right;
-	font-size:.7em;
-	font-family:monospace;
+	position: absolute;
+	top: 33px;
+	right: 15px;
+	font-size: .7em;
+	font-family: monospace;
 
 	a:link, a:visited {
-		color:#666;
+		color: #666;
 	}
-	a:hover {color:black;}
+	a:hover {color: black;}
 }
 
 .divider {
@@ -146,10 +152,10 @@ h3.md-subhead {
 }
 
 .logos {
-	margin:1em 0;
-	width:300px;
-	height:auto;
-	float:left;
+	margin: 1em 0;
+	width: 300px;
+	height: auto;
+	float: left;
 }
 
 ecoroofs-map {
@@ -195,37 +201,36 @@ ecoroofs-map-search {
 }
 
 .md-sidenav-right {
-  width:420px; //overrides md 320
+  width: 420px; //overrides md 320
 
   table.md-sidebar--data {
     @include float_full();
-		width:95%;
-    font-size:.9em;
-    line-height:1.3em;
+		width: 95%;
+    font-size: .9em;
+    line-height: 1.3em;
 		animation: simple-opacity 300ms forwards;
-		animation-fill-mode:both;
+		animation-fill-mode: both;
 
 
 		td {
-			padding:7px 0px;
-			border-bottom:1px solid #eee !important;
+			padding: 7px 0px;
+			border-bottom: 1px solid #eee !important;
 		}
 
-		td.medrow {width:35%;}
+		td.medrow {width: 35%;}
 
     td.data--label {
       font-size: .7em;
-      color:#666;
-      text-align:right;
-      padding-right:20px;
-      text-transform:uppercase;
+      color: #666;
+      text-align: right;
+      padding-right: 20px;
+      text-transform: uppercase;
       letter-spacing: 1px;
 			vertical-align: top;
     }
   }
 }
 
-// XXX: Why does OL use ems for positioning controls?
 .ol-control button {
     width: 32px;
     height: 32px;
@@ -265,29 +270,27 @@ ecoroofs-map-search {
 	header {height: 95px;}
 
 	h1 {
-		font-size:2.2em;
-		width:65%;
+		font-size: 2.2em;
+		width: 65%;
 		line-height: 1.1em;
 	}
 
-	header h3 {
-		display:none;
-	}
+	header h3 { display: none;}
 
 	.logos {
-		margin:1em 0;
-		width:45%;
-		height:auto;
+		margin: 1em 0;
+		width: 45%;
+		height: auto;
 	}
 
 	ecoroofs-map-search {
 		top: 0px;
 	  left: 0px;
 	  min-width: 100%;
-		width:100%;
+		width: 100%;
 	}
 
-	.mobshow {display:block;}
+	.mobshow {display: block;}
 }
 
 
