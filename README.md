@@ -81,3 +81,12 @@ in GeoServer, but that's not *too* hard:
   - Set the layer `Title` to `Locations`
   - Click the `Compute from data` and `Compute from native bounds` links
   - `Save` (this will take you back to the `Layers` page)
+  
+  ### Front End Tools
+  
+There is a `gulpfile.js` located in /ecoroofs/static/ that contains two helpful tasks. 
+  
+ - gulp-sass: Precompiles scss files
+ - browserSync: Watches for changes to any file contained in the `static` directory and auto-reloads the active browser window
+ 
+ Run `gulp watch` from within the static directory and a new browswer window will launch the application at http://localhost:3000. 
