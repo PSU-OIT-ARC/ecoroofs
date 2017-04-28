@@ -1,0 +1,32 @@
+{
+  "name": "ecoroofs",
+  "version": "1.0.0-dev.0",
+  "description": "EcoRoofs",
+  "repository": "https://github.com/PSU-OIT-ARC/ecoroofs",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "angular": "~1.5.11",
+    "angular-animate": "~1.5.11",
+    "angular-aria": "~1.5.11",
+    "angular-messages": "~1.5.11",
+    "angular-resource": "~1.5.11",
+    "angular-route": "~1.5.11",
+    "angular-material": "~1.1.4",
+    "openlayers": "^4.1.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^6.7.7",
+    "babel-core": "^6.24.1",
+    "browser-sync": "^2.18.8",
+    "clean-css": "^3.4.25",
+    "core-js": "^2.4.1",
+    "gulp": "^3.9.1",
+    "node-sass": "^3.13.1",
+    "postcss-clean": "^1.0.2",
+    "postcss-cli": "^2.6.0",
+    "systemjs": "^0.19.47",
+    "systemjs-builder": "^0.15.36",
+    "systemjs-plugin-babel": "^0.0.15",
+    "systemjs-plugin-text": "^0.0.9"
+  }
+}

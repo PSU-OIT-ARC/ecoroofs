@@ -1,0 +1,125 @@
+<md-sidenav class="md-sidenav-right"
+            md-component-id="sidenav-map-info"
+            md-disable-backdrop
+            md-whiteframe="4">
+
+    <md-content layout="column">
+
+        <div layout="row" layout-align="start center">
+            <h2 class="md-title no-margin standard-padding" flex>Location</h2>
+            <md-button title="Hide sidebar"
+                       class="md-icon-button no-margin"
+                       ng-click="$ctrl.close()">
+                <md-icon>chevron_right</md-icon>
+            </md-button>
+        </div>
+
+        <md-divider></md-divider>
+
+        <div class="md-subhead" layout="row" layout-align="start center">
+            <span flex class="standard-padding">{{ $ctrl.location.name }}</span>
+            <md-button title="Center map on this location"
+                       class="md-icon-button"
+                       ng-click="$ctrl.showLocation($ctrl.location)">
+                <md-icon>place</md-icon>
+            </md-button>
+        </div>
+
+        <md-divider></md-divider>
+
+        <div ng-show="$ctrl.location.$resolved" layout="column" layout-padding>
+
+          <table class="md-sidebar--data" cellpadding="0" cellspacing="0">
+            <tr>
+              <td class="medrow data--label">Address</td>
+              <td>{{ $ctrl.location.address_obscured }}</td>
+            </tr>
+            
+            <tr>
+              <td class="medrow data--label">Neighborhood</td>
+              <td>{{ $ctrl.location.neighborhood.name }} </td>
+            </tr>
+
+            <tr>
+              <td class="medrow data--label">Usage</td>
+              <td>{{ $ctrl.location.building_use.name }}</td>
+            </tr>
+
+            <tr>
+              <td class="medrow data--label">Size</td>
+              <td>{{ $ctrl.location.square_footage|number }} ft<sup>2</sup>&nbsp;&nbsp;({{ $ctrl.location.square_footage * 0.093 | number}} m<sup>2</sup>)</td>
+            </tr>
+
+            <tr ng-if="$ctrl.location.year_built !== null">
+              <td class="medrow data--label">Year Built</td>
+              <td>{{ $ctrl.location.year_built }}</td>
+            </tr>
+
+            <tr ng-if="$ctrl.location.watershed">
+              <td class="medrow data--label">Watershed Name</td>
+              <td>{{ $ctrl.location.watershed.name }}</td>
+            </tr>
+            <!-- <tr ng-if="$ctrl.location.irrigated === null">
+              <td class="medrow data--label">Irrigated</td>
+              <td>:shrug_man:</td>
+            </tr>-->
+            <tr ng-if="$ctrl.location.irrigated !== null">
+              <td class="medrow data--label">Irrigated</td>
+              <td>{{ $ctrl.location.irrigated ? 'Yes' : 'No' }}</td>
+            </tr>
+
+            <tr ng-if="$ctrl.location.contractor">
+              <td class="medrow data--label">Contractor</td>
+              <td>{{ $ctrl.location.contractor.name }}</td>
+            </tr>
+
+            <tr ng-if="$ctrl.location.number_of_roofs !== null">
+              <td class="medrow data--label">No. of Roofs</td>
+              <td>{{ $ctrl.location.number_of_roofs|number }}</td>
+            </tr>
+
+            <tr ng-if="$ctrl.location.solar_over_ecoroof !== null">
+              <td class="medrow data--label">Solar Panels</td>
+              <td>{{ $ctrl.location.solar_over_ecoroof ? 'Yes' : 'No' }} </td>
+            </tr>
+
+
+            <tr ng-if="$ctrl.location.depth !== null">
+              <td class="medrow data--label">Depth</td>
+              <td>{{ $ctrl.location.depth }} in&nbsp;&nbsp;({{ $ctrl.location.depth * 2.54 | number }} cm)</td>
+            </tr>
+
+            <tr ng-if="$ctrl.location.construction_type">
+              <td class="medrow data--label">Construction Type</td>
+              <td>{{ $ctrl.location.construction_type.name }}</td>
+            </tr>
+
+            <tr ng-if="$ctrl.location.confidence.name">
+              <td class="medrow data--label">Confidence</td>
+              <td>{{ $ctrl.location.confidence.name }}</td>
+            </tr>
+
+            <tr ng-if="$ctrl.location.composition">
+              <td class="medrow data--label">Composition</td>
+              <td>{{ $ctrl.location.composition }}</td>
+            </tr>
+
+            <tr ng-if="$ctrl.location.plants">
+              <td class="medrow data--label">Plants</td>
+              <td>{{ $ctrl.location.plants }}</td>
+            </tr>
+
+            <tr ng-if="$ctrl.location.maintenance">
+              <td class="medrow data--label">Maintenance plan</td>
+              <td>{{ $ctrl.location.maintenance }}</td>
+            </tr>
+
+            <tr ng-if="$ctrl.location.drainage">
+              <td class="medrow data--label">Drainage</td>
+              <td>{{ $ctrl.location.drainage }}</td>
+            </tr>
+
+          </table>
+        </div>
+    </md-content>
+</md-sidenav>

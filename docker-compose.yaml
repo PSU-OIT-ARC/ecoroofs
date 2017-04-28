@@ -1,0 +1,67 @@
+version: "2"
+
+networks:
+    ecoroofs:
+        external: true
+
+volumes:
+    ecoroofs-geoserver-data:
+        external: true
+    ecoroofs-postgres-data:
+        external: true
+
+services:
+    ecoroofs:
+        image: ecoroofs
+        build:
+            context: .
+        command: /webapps/ecoroofs/venv/bin/python manage.py runserver 0.0.0.0:8000
+        environment:
+            - LOCAL_SETTINGS_FILE=local.docker.cfg
+            - WSGI_ROOT=/webapps/ecoroofs/src
+            - WSGI_VENV=/webapps/ecoroofs/venv
+        networks:
+            - ecoroofs
+        expose:
+            - 8000
+        ports:
+            - 8000:8000
+        volumes:
+            - .:/webapps/ecoroofs/src
+        depends_on:
+            - base
+            - geoserver
+            - postgres
+        links:
+            - postgres:database
+
+    base:
+        image: django-mod_wsgi-postgres
+        build:
+            context: ./docker/django-mod_wsgi-postgres
+        networks:
+            - ecoroofs
+
+    geoserver:
+        image: ecoroofs-geoserver
+        build:
+            context: ./docker/ecoroofs-geoserver
+        networks:
+            - ecoroofs
+        ports:
+            - 8080:80
+        volumes:
+            - ecoroofs-geoserver-data:/var/geoserver/data
+        links:
+            - postgres:database
+
+    postgres:
+        image: ecoroofs-postgres
+        build:
+            context: ./docker/ecoroofs-postgres
+        networks:
+            - ecoroofs
+        ports:
+            - 5432:5432
+        volumes:
+            - ecoroofs-postgres-data:/var/lib/pgsql/9.4/data

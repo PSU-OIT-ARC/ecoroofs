@@ -1,0 +1,65 @@
+<header>
+  <h1><a href="/#!/" ng-click="$ctrl.close()">Portland Ecoroof Map</a></h1>
+  <h3>Explore
+      <span class="total__ft2">{{ $ctrl.totalSquareFootage|number }} sq. ft.</span>
+      <span class="total__m2" style="display:none;">{{ $ctrl.totalSquareFootage * 0.093 | number }} ft<sup>2</sup></span>
+      of Sustainable Roofs in Portland, OR. <a href="/#!/pages/about" ng-click="$ctrl.close()">Learn&nbsp;more &rarr;</a>
+  </h3>
+
+  <div class="toolbar__auth">
+    <div ng-if="!$ctrl.user.isAuthenticated">
+      <a title="Log in" href="/login">
+        <md-icon>account_circle</md-icon>
+      </a>
+    </div>
+    <md-menu ng-if="$ctrl.user.isAuthenticated">
+        <md-button class="md-fab md-mini" ng-click="$mdOpenMenu($event)">
+            <span>{{ $ctrl.user.initials }}</span>
+        </md-button>
+        <md-menu-content width="4">
+            <md-menu-item>
+                <div>
+                    <md-icon>account_circle</md-icon>
+                    <span style="margin-left: 16px">
+                        {{ $ctrl.user.fullName }}
+                    </span>
+                </div>
+            </md-menu-item>
+            <md-divider></md-divider>
+            <md-menu-item ng-if="$ctrl.user.isStaff">
+                <md-button ng-href="/admin">
+                    <md-icon>build</md-icon>
+                    Admin
+                </md-button>
+            </md-menu-item>
+            <md-divider></md-divider>
+            <md-menu-item>
+                <md-button href="/logout" class="md-warn">
+                    <md-icon>exit_to_app</md-icon>
+                    Log out
+                </md-button>
+            </md-menu-item>
+            <md-divider></md-divider>
+            <md-menu-item>
+                <small>Version:</small>
+                <small>{{ $ctrl.appConfig.version }}</small>
+            <md-menu-item>
+        </md-menu-content>
+    </md-menu>
+  </div>
+
+
+  <div class="mobshow toolbar__learn-more">
+    <a href="/#!/pages/about" ng-click="$ctrl.close()">Learn&nbsp;more &rarr;</a>
+  </div>
+
+
+  <div class="toolbar__activity" ng-if="$ctrl.totalSquareFootage" hide-xs>
+    <div id="activity-indicator" class="invisible">
+        <md-progress-linear md-mode="indeterminate"></md-progress-linear>
+    </div>
+  </div>
+
+
+
+</header>

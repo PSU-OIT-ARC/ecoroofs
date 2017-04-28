@@ -1,0 +1,24 @@
+# Root
+/*.egg-info/
+/.env/
+/build/
+/dist/
+/media/
+/rlis/
+/static/
+/local.cfg
+/local.dev.cfg
+/local.docker.cfg
+/local.prod.cfg
+/local.stage.cfg
+/local.test.cfg
+/*/static/bundles/
+/*/static/node_modules/
+/*/static/**/*.css
+*.DS_Store
+
+
+# Anywhere
+__pycache__/
+*.pyc
+*.pyo

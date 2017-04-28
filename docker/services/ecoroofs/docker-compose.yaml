@@ -1,0 +1,36 @@
+version: "3"
+
+networks:
+    ecoroofs:
+        external: true
+
+volumes:
+    ecoroofs-geoserver-data:
+        external: true
+    ecoroofs-postgres-data:
+        external: true
+
+services:
+    geoserver:
+        image: ecoroofs-geoserver
+        build:
+            context: ../../ecoroofs-geoserver
+        networks:
+            - ecoroofs
+        ports:
+            - 8080:80
+        volumes:
+            - ecoroofs-geoserver-data:/var/geoserver/data
+        links:
+            - postgres:database
+
+    postgres:
+        image: ecoroofs-postgres
+        build:
+            context: ../../ecoroofs-postgres
+        networks:
+            - ecoroofs
+        ports:
+            - 5432:5432
+        volumes:
+            - ecoroofs-postgres-data:/var/lib/pgsql/9.4/data

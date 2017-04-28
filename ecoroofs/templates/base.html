@@ -1,0 +1,68 @@
+<!doctype html>
+
+{% load arc %}
+{% load staticfiles %}
+
+<html>
+    <head>
+        <title>The Portland Ecoroof Map, Portland, Oregon</title>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+        <meta name="description" content="The Portland Ecoroof Map is a tool for helping to document the extent and history of ecoroof coverage in Portland, OR.">
+
+        {% block css %}
+            {% block cdn_css %}
+            <link href="https://fonts.googleapis.com/css?family=Mate|Roboto|Roboto+Slab" rel="stylesheet">
+
+                <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+                {% for cdn_url in CDN_URLS.css %}
+                    <link href="{% cdn_url cdn_url %}" rel="stylesheet">
+                {% endfor %}
+            {% endblock %}
+
+            {% block app_css %}
+                {% for path in STATIC_PATHS.css %}
+                    <link href="{% static path %}" rel="stylesheet">
+                {% endfor %}
+                <link href="{% static 'base.css' %}" rel="stylesheet">
+            {% endblock %}
+        {% endblock %}
+    </head>
+
+    <body>
+        <ecoroofs-toolbar></ecoroofs-toolbar>
+        <div ng-view></div>
+
+        {% block js %}
+            <script>APP_CONFIG = {{ APP_CONFIG|jsonify }};</script>
+
+            {% block cdn_js %}
+                {% for cdn_url in CDN_URLS.js %}
+                    <script src="{% cdn_url cdn_url %}"></script>
+                {% endfor %}
+            {% endblock %}
+
+            {% block app_js %}
+                {% if debug %}
+                    <script src="{% static 'node_modules/core-js/client/shim.min.js' %}"></script>
+                    <script src="{% static 'node_modules/systemjs/dist/system.src.js' %}"></script>
+                    <script src="{% static 'systemjs.config.js' %}"></script>
+                    <script>
+                        System.import('app').catch(function (error) {
+                            console.error(error);
+                        });
+                    </script>
+                {% else %}
+                    {% for path in STATIC_PATHS.js %}
+                        <script src="{% static path %}"></script>
+                    {% endfor %}
+                    <script src="{% static 'bundles/angular.bundle.js' %}"></script>
+                    <script src="{% static 'bundles/app.bundle.js' %}"></script>
+                {% endif %}
+            {% endblock %}
+
+            {% google_analytics %}
+        {% endblock %}
+    </body>
+</html>

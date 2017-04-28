@@ -1,0 +1,25 @@
+<form ng-submit="$ctrl.search()" layout="row" layout-align="start center">
+    <div flex>
+        <input type="search"
+               id="search_text"
+               name="search_text"
+               autocomplete="off"
+               placeholder="Search by street address ..."
+               title="Search for locations by name"
+               ng-model="$ctrl.searchTerm">
+    </div>
+
+    <md-button type="submit" class="md-icon-button" ng-disabled="!$ctrl.searchTerm">
+        <md-icon>search</md-icon>
+    </md-button>
+
+    <md-button class="md-icon-button" ng-click="$ctrl.resetSearch()" ng-disabled="!$ctrl.searchTerm">
+        <md-icon>clear</md-icon>
+    </md-button>
+</form>
+
+<md-divider ng-if="$ctrl.hasSearchResults"></md-divider>
+
+<div ng-if="$ctrl.searchResultsMessage" class="search-meta-info">
+    {{ $ctrl.searchResultsMessage }}
+</div>
