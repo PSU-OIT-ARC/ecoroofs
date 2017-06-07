@@ -2,12 +2,16 @@ from django.db.models import Sum
 from django.contrib.postgres.search import SearchQuery, SearchVector
 
 from rest_framework.decorators import api_view, list_route
+from rest_framework.generics import ListAPIView
 from rest_framework.exceptions import ParseError
 from rest_framework.response import Response
+from rest_framework.permissions import DjangoModelPermissionsOrAnonReadOnly
 
 from ..views import ModelViewSet
-from .models import Location
-from .serializers import LocationSerializer, PrivilegedLocationSerializer
+from .models import Location, BuildingUse
+from .serializers import (LocationSerializer,
+                          PrivilegedLocationSerializer,
+                          BuildingUseSerializer)
 
 
 class LocationViewSet(ModelViewSet):
@@ -61,3 +65,9 @@ def square_footage(request, neighborhood=None):
         'neighborhood': neighborhood,
         'neighborhood_total': neighborhood_total,
     })
+
+
+class BuildingUseListView(ListAPIView):
+    permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
+    queryset = BuildingUse.objects.all()
+    serializer_class = BuildingUseSerializer
