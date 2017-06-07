@@ -105,6 +105,12 @@
               <td>{{ $ctrl.location.drainage }}</td>
             </tr>
 
+            <tr ng-if="$ctrl.location.last_modified_on">
+              <td class="medrow data--label">Last modified</td>
+              <td>
+                {{ $ctrl.location.last_modified_on | date: format: mediumDate }}
+              </td>
+            </tr>
           </table>
         </div>
     </md-content>
