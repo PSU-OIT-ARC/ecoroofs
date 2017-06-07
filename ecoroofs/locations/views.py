@@ -26,12 +26,35 @@ class LocationViewSet(ModelViewSet):
 
     @list_route()
     def search(self, request):
+        # Search
+        q = self.queryset
         term = request.query_params.get('q', '').strip()
-        if not term:
-            raise ParseError('Missing search term (q query parameter)')
-        search_query = SearchQuery(term)
-        q = Location.objects.annotate(search=SearchVector('name', 'neighborhood__name'))
-        q = q.filter(search=search_query)
+        if term:
+            search_query = SearchQuery(term)
+            q = q.annotate(search=SearchVector('name', 'address_obscured'))
+            q = q.filter(search=search_query)
+
+        # Filters
+        usage = request.query_params.get("usage", '').strip()
+        if usage:
+            q = q.filter(building_use=usage)
+
+        depth_min = request.query_params.get("depth_min", '').strip()
+        if depth_min:
+            q = q.filter(depth_min__gte=depth_min)
+
+        depth_max = request.query_params.get("depth_max", '').strip()
+        if depth_max:
+            q = q.filter(depth_max__lte=depth_max)
+
+        year_built_min = request.query_params.get("year_built_min", '').strip()
+        if year_built_min:
+            q = q.filter(year_built__gte=year_built_min)
+
+        year_built_max = request.query_params.get("year_built_max", '').strip()
+        if year_built_max:
+            q = q.filter(year_built__lte=year_built_max)
+
         serializer = self.get_serializer(q, many=True)
         return Response(serializer.data)
 
