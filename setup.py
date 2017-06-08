@@ -14,7 +14,7 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=[
-        'django>=1.10.7,<1.11',
+        'django>=1.11.0',
         'django-arcutils>=2.17.0',
         'django-pgcli>=0.0.2',
         'djangorestframework>=3.6.2',
