@@ -186,10 +186,20 @@ ecoroofs-map-search {
       padding: 0;
       font-size: 14px;
       width: 100%;
+
+      &[type=number] {
+          border-bottom: solid 1px rgba(0, 0, 0, 0.12);
+
+          &:nth-child(odd) {
+              margin-right: 20px;
+          }
+      }
     }
+
     .md-button.md-icon-button {
       margin: 0;
     }
+
   }
 
   .search-meta-info {
@@ -253,6 +263,35 @@ ecoroofs-map-search {
     right: 8px;
     top: auto;
     left: auto;
+}
+
+/* bottom-left control */
+.ol-control.layer-switch {
+    bottom: 8px;
+    left: 8px;
+    top: auto;
+    right: auto;
+    background-size: 62px 62px;
+    background-repeat: no-repeat;
+
+    &.Road button{
+        background-image: url("road_layer.png");
+    }
+
+    &.Satellite button{
+        background-image: url("satellite_layer.png");
+    }
+
+    button {
+        width: 64px;
+        height: 64px;
+
+        span {
+            font-size: 0.65em;
+            position: relative;
+            top: 15px;
+        }
+    }
 }
 
 

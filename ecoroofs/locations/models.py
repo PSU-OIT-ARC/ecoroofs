@@ -63,6 +63,9 @@ class Location(BaseModel):
     neighborhood = models.ForeignKey('neighborhoods.Neighborhood', null=True, editable=False)
     watershed = models.ForeignKey('Watershed', null=True, blank=True)
 
+    # Audit fields
+    last_modified_on = models.DateTimeField(auto_now=True)
+
     def set_neighborhood_automatically(self):
         """Set neighborhood via spatial contains query.
 

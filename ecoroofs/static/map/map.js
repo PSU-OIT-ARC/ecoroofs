@@ -22,10 +22,50 @@ const geojsonFormat = new ol.format.GeoJSON({
 const psuGreen = '#6a7f10';
 const psuGreenRGB = '106,127,16';
 
+
+class LayerSwitcher extends ol.control.Control {
+    constructor (options={}) {
+
+        const button = document.createElement("button");
+        const element = document.createElement("div");
+        const span = document.createElement("span");
+        const label = "Satellite";
+
+        span.innerText = label;
+        button.appendChild(span);
+        element.className = ("layer-switch ol-unselectable ol-control " + label);
+        element.appendChild(button);
+
+        super ({
+            element: element,
+            target: options.target,
+        });
+        this.label = label;
+        button.addEventListener('click', () => {this.switchBaseLayer(this.label)});
+    }
+
+    switchBaseLayer (label) {
+        const map = this.getMap();
+        map.baseLayers.forEach((layer) => {
+            let shortLabel = layer.get("shortLabel");
+            if (shortLabel !== label) {;
+                layer.set("visible", false);
+                this.element.classList.add(shortLabel);
+                this.element.querySelector("span").innerText = shortLabel;
+                this.label = shortLabel;
+            }
+            else {
+                layer.set("visible", true);
+                this.element.classList.remove(label);
+            }
+        })
+    }
+}
+
+
 export default class Map extends ol.Map {
     constructor ($http, appConfig) {
         const options = appConfig.map;
-
         const center = ol.proj.fromLonLat(options.view.center);
         const serverOptions = options.server;
         const mapServerBaseURL = serverOptions.baseURL;
@@ -67,10 +107,19 @@ export default class Map extends ol.Map {
         const baseLayers = [
             new ol.layer.Tile({
                 label: 'Road Map',
-                shortLabel: 'Map',
+                shortLabel: 'Road',
                 source: new ol.source.BingMaps({
                     key: options.bing.key,
                     imagerySet: 'Road'
+                })
+            }),
+            new ol.layer.Tile({
+                label: 'Satellite/Aerial',
+                shortLabel: 'Satellite',
+                visible: false,
+                source: new ol.source.BingMaps({
+                    key: options.bing.key,
+                    imagerySet: 'Aerial'
                 })
             })
         ];
@@ -135,9 +184,14 @@ export default class Map extends ol.Map {
             zoom: options.view.zoom
         });
 
+        const controls = ol.control.defaults().extend([
+            new LayerSwitcher()
+        ]);
+
         super({
             layers: allLayers,
-            view: view
+            view: view,
+            controls: controls
         });
 
         this.$http = $http;
@@ -148,6 +202,7 @@ export default class Map extends ol.Map {
         this.neighborhoodHighlightLayer = neighborhoodHighlightLayer;
         this.highlightOverlay = highlightOverlay;
         this.searchResultsOverlay = searchResultsOverlay;
+        this.baseLayers = baseLayers;
 
         this.on('singleclick', (event) => {
             const coordinate = this.getCoordinateFromPixel(event.pixel)

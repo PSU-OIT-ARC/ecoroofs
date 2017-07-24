@@ -31,11 +31,6 @@
 
           <table class="md-sidebar--data" cellpadding="0" cellspacing="0">
             <tr>
-              <td class="medrow data--label">Address</td>
-              <td>{{ $ctrl.location.address_obscured }}</td>
-            </tr>
-            
-            <tr>
               <td class="medrow data--label">Neighborhood</td>
               <td>{{ $ctrl.location.neighborhood.name }} </td>
             </tr>
@@ -59,10 +54,7 @@
               <td class="medrow data--label">Watershed Name</td>
               <td>{{ $ctrl.location.watershed.name }}</td>
             </tr>
-            <!-- <tr ng-if="$ctrl.location.irrigated === null">
-              <td class="medrow data--label">Irrigated</td>
-              <td>:shrug_man:</td>
-            </tr>-->
+
             <tr ng-if="$ctrl.location.irrigated !== null">
               <td class="medrow data--label">Irrigated</td>
               <td>{{ $ctrl.location.irrigated ? 'Yes' : 'No' }}</td>
@@ -83,7 +75,6 @@
               <td>{{ $ctrl.location.solar_over_ecoroof ? 'Yes' : 'No' }} </td>
             </tr>
 
-
             <tr ng-if="$ctrl.location.depth !== null">
               <td class="medrow data--label">Depth</td>
               <td>{{ $ctrl.location.depth }} in&nbsp;&nbsp;({{ $ctrl.location.depth * 2.54 | number }} cm)</td>
@@ -92,11 +83,6 @@
             <tr ng-if="$ctrl.location.construction_type">
               <td class="medrow data--label">Construction Type</td>
               <td>{{ $ctrl.location.construction_type.name }}</td>
-            </tr>
-
-            <tr ng-if="$ctrl.location.confidence.name">
-              <td class="medrow data--label">Confidence</td>
-              <td>{{ $ctrl.location.confidence.name }}</td>
             </tr>
 
             <tr ng-if="$ctrl.location.composition">
@@ -119,6 +105,12 @@
               <td>{{ $ctrl.location.drainage }}</td>
             </tr>
 
+            <tr ng-if="$ctrl.location.last_modified_on">
+              <td class="medrow data--label">Last modified</td>
+              <td>
+                {{ $ctrl.location.last_modified_on | date: format: mediumDate }}
+              </td>
+            </tr>
           </table>
         </div>
     </md-content>

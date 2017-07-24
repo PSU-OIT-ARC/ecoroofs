@@ -14,17 +14,61 @@ const SearchComponent = {
         this.numSearchResults = null;
         this.searchResultsMessage = null;
 
-        this.search = () => {
-            const term = this.searchTerm.replace(/^\s+|\s+$/g);
+        // Filters
+        this.showFilters = false;
+        this.usage = { id: null };
+        this.depth = {
+            min: null,
+            max: null
+        };
+        this.year_built = {
+            min: null,
+            max: null
+        }
+        this.filterData =  Location.building_uses((uses) => {
+            const numResults = uses.length;
+            let options = [];
+            if (numResults) {
+                let option = {};
+                uses.forEach( (use)=> {
+                    option.id = use.id;
+                    option.name = use.name;
+                    options.push(option);
+                });
+                return options;
+            }
+        })
 
-            if (!term) {
+
+
+        this.search = () => {
+            const usage = this.usage;
+            const depthMin = this.depth.min;
+            const depthMax = this.depth.max;
+            const yearMin = this.year_built.min;
+            const yearMax = this.year_built.max;
+            let term = this.searchTerm;
+            if (term) {
+                term.replace(/^\s+|\s+$/g);
+            }
+            const searchFields = [term, usage, depthMin, depthMax, yearMin, yearMax];
+            const shouldSearch = searchFields.filter(
+                (field) => {
+                    return field;
+                });
+            if (!shouldSearch.length) {
                 return;
             }
 
             mapSource.clear(true);
 
             this.locations = Location.search({
-                q: term
+                q: term,
+                usage: usage,
+                depth_min: depthMin,
+                depth_max:depthMax,
+                year_built_min: yearMin,
+                year_built_max: yearMax
             }, (locations) => {
                 const numSearchResults = locations.length;
                 const s = numSearchResults === 1 ? '' : 's';
@@ -68,6 +112,11 @@ const SearchComponent = {
             this.hasSearchResults = false;
             this.numSearchResults = null;
             this.searchResultsMessage = null;
+            this.depth.min = null;
+            this.depth.max = null;
+            this.usage = null;
+            this.year_built.min = null;
+            this.year_built.max = null;
             mapSource.clear(true);
         }
 
