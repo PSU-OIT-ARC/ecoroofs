@@ -7,7 +7,7 @@ import arcutils.cas.urls
 from .views import AppView
 
 from .locations.views import LocationViewSet, square_footage
-from .pages.views import PageViewSet
+from .pages.views import PageViewSet, slugify_name
 
 
 urlpatterns = [
@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^_/locations/square-footage$', square_footage, name='square-footage'),
     url(r'^_/locations/square-footage/(?P<neighborhood>.+)$', square_footage,
         name='square-footage-neighborhood'),
+    url(r'^_/pages/slugify_name$', slugify_name, name='slugify_name')
 ]
 
 

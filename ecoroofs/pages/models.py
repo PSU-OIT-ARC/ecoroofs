@@ -8,6 +8,7 @@ from ..models import BaseModel
 
 class Page(BaseModel, CachedPropertyInvalidatorMixin):
 
+    slug = models.SlugField()
     description = models.TextField(null=True, blank=True)
     content = models.TextField()
     published = models.BooleanField(default=False)

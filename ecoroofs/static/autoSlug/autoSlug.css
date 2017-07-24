@@ -1,0 +1,19 @@
+input.warn {
+    border-color: #f0ad4e;
+}
+
+ul.warn {
+    font-style: bold;
+}
+
+span.slug {
+    color: #333;
+    font-family: monospace;
+}
+
+input:read-only {
+    background: #e6e6e6;
+    color: grey;
+    -o-user-select: none;
+    user-select: none;
+}
