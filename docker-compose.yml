@@ -1,14 +1,8 @@
-version: "2"
+version: "3"
 
 networks:
-    ecoroofs:
-        external: true
-
-volumes:
-    ecoroofs-geoserver-data:
-        external: true
-    ecoroofs-postgres-data:
-        external: true
+  default:
+    driver: bridge
 
 services:
     ecoroofs:
@@ -21,7 +15,7 @@ services:
             - WSGI_ROOT=/webapps/ecoroofs/src
             - WSGI_VENV=/webapps/ecoroofs/venv
         networks:
-            - ecoroofs
+            - default
         expose:
             - 8000
         ports:
@@ -40,18 +34,18 @@ services:
         build:
             context: ./docker/django-mod_wsgi-postgres
         networks:
-            - ecoroofs
+            - default
 
     geoserver:
         image: ecoroofs-geoserver
         build:
             context: ./docker/ecoroofs-geoserver
         networks:
-            - ecoroofs
+            - default
         ports:
             - 8080:80
         volumes:
-            - ecoroofs-geoserver-data:/var/geoserver/data
+            - ./volumes/geoserver:/var/geoserver/data
         links:
             - postgres:database
 
@@ -60,8 +54,8 @@ services:
         build:
             context: ./docker/ecoroofs-postgres
         networks:
-            - ecoroofs
+            - default
         ports:
             - 5432:5432
         volumes:
-            - ecoroofs-postgres-data:/var/lib/pgsql/9.4/data
+            - ./volumes/postgres:/var/lib/pgsql/9.4/data

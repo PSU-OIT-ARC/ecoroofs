@@ -25,6 +25,7 @@ setup(
         'dev': [
             'flake8',
             'unidecode',
+            'docker-compose'
         ]
     },
 )
