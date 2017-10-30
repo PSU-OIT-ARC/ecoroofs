@@ -1,30 +1,33 @@
 from runcommands import command
 from runcommands.util import abort, abs_path, args_to_str, printer
 
-from arctasks.commands import *
-from arctasks.deploy import Deployer
+from arctasks.dev import commands as dev
+from arctasks.aws import commands as aws
+from arctasks.aws.deploy import AWSDeployer
+
+from arctasks.aws.commands import *
 
 
 @command(env='dev', timed=True)
 def init(config, overwrite=False, drop_db=False):
-    virtualenv(config, overwrite=overwrite)
-    install(config)
-    npm_install(config, where='{package}:static', modules=[])
-    createdb(config, drop=drop_db)
-    migrate(config)
-    sass(config)
-    test(config, force_env='test')
+    dev.virtualenv(config, overwrite=overwrite)
+    dev.install(config)
+    dev.npm_install(config, where='{package}:static', modules=[])
+    dev.createdb(config, drop=drop_db, with_postgis=True)
+    dev.migrate(config)
+    dev.sass(config)
+    dev.test(config, force_env='test')
 
 
 @command(env='dev')
 def build_static(config, css=True, css_sources=(), js=True, js_sources=(), collect=True,
                  optimize=True, static_root=None, echo=False, hide=None):
     if css:
-        build_css(config, sources=css_sources, optimize=optimize, echo=echo, hide=hide)
+        dev.build_css(config, sources=css_sources, optimize=optimize, echo=echo, hide=hide)
     if js:
-        build_js(config, sources=js_sources, echo=echo, hide=hide)
+        dev.build_js(config, sources=js_sources, echo=echo, hide=hide)
     if collect:
-        collectstatic(config, static_root=static_root, echo=echo, hide=hide)
+        dev.collectstatic(config, static_root=static_root, echo=echo, hide=hide)
 
 
 @command(env='dev', timed=True)
@@ -36,24 +39,14 @@ def build_js(config, sources=(), echo=False, hide=None):
     local(config, ('node', 'build.js'), cd=where, echo=echo, hide=hide)
 
 
-class EcoRoofsDeployer(Deployer):
-
-    def build_static(self):
-        printer.header('Building static files (EcoRoofs custom)...')
-        build_static(self.config, static_root='{path.build.static_root}')
-
-
-deploy.deployer_class = EcoRoofsDeployer
-
-
 @command(default_env='dev', timed=True)
 def import_all(config, reset_db=False,
                neighborhoods_shapefile_path='rlis/nbo_hood', from_srid=None,
                locations_file_name='locations.csv',
                overwrite=False, dry_run=False, quiet=False):
     if reset_db:
-        reset_db(config)
-        migrate(config)
+        dev.reset_db(config)
+        dev.migrate(config)
     import_neighborhoods(
         config, neighborhoods_shapefile_path, from_srid, overwrite, dry_run, quiet)
     import_locations(config, locations_file_name, overwrite, dry_run, quiet)
@@ -91,3 +84,26 @@ def import_neighborhoods(config, path='rlis/nbo_hood', from_srid=None,
     location_importer = Importer(
         path, from_srid=from_srid, overwrite=overwrite, dry_run=dry_run, quiet=quiet)
     location_importer.run()
+
+
+class Deployer(AWSDeployer):
+    def build_static(self):
+        printer.header('Building static files (EcoRoofs custom)...')
+        build_static(self.config, static_root='{path.build.static_root}')
+
+    def post_install(self):
+        from arctasks.remote import manage
+
+        # Migrate database schema
+        manage(self.config, 'migrate')
+
+
+@command(env=True)
+def deploy_app(config, provision=False, createdb=False):
+    if provision:
+        aws.provision_webhost(config, with_gis=True)
+    if createdb:
+        aws.createdb(config, with_postgis=True,
+                     extensions=['postgis', 'hstore'])
+
+    aws.deploy(config, deployer_class=Deployer)

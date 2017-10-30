@@ -2,8 +2,7 @@
 
 ## 1.1.0 - unreleased
 
-In progress...
-
+- Configures the project to use the 'arctasks.aws' backend.
 
 ## 1.0.0 - 2017-04-27
 

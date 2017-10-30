@@ -14,6 +14,7 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=[
+        'psu.oit.arc.tasks>=1.1.0',
         'django>=1.10.8,<1.11',
         'django-arcutils>=2.24.0',
         'django-pgcli>=0.0.2',
