@@ -1,11 +1,11 @@
 from runcommands import command
 from runcommands.util import abort, abs_path, args_to_str, printer
 
-from arctasks.dev import commands as dev
-from arctasks.aws import commands as aws
-from arctasks.aws.deploy import AWSDeployer
+from emcee.dev import commands as dev
+from emcee.aws import commands as aws
+from emcee.aws.deploy import AWSDeployer
 
-from arctasks.aws.commands import *
+from emcee.aws.commands import *
 
 
 @command(env='dev', timed=True)
@@ -56,7 +56,7 @@ def import_all(config, reset_db=False,
 def import_locations(config, file_name='locations.csv', overwrite=False, dry_run=False,
                      quiet=False):
     """Import locations from CSV file provided by client."""
-    from arctasks.django import setup; setup(config)  # noqa
+    from emcee.django import setup; setup(config)  # noqa
     from ecoroofs.locations.importer import Importer
     location_importer = Importer(file_name, overwrite=overwrite, dry_run=dry_run, quiet=quiet)
     location_importer.run()
@@ -79,7 +79,7 @@ def import_neighborhoods(config, path='rlis/nbo_hood', from_srid=None,
     corresponding ``--path`` option.
 
     """
-    from arctasks.django import setup; setup(config)  # noqa
+    from emcee.django import setup; setup(config)  # noqa
     from ecoroofs.neighborhoods.importer import Importer
     location_importer = Importer(
         path, from_srid=from_srid, overwrite=overwrite, dry_run=dry_run, quiet=quiet)
@@ -92,7 +92,7 @@ class Deployer(AWSDeployer):
         build_static(self.config, static_root='{path.build.static_root}')
 
     def post_install(self):
-        from arctasks.remote import manage
+        from emcee.remote import manage
 
         # Migrate database schema
         manage(self.config, 'migrate')
