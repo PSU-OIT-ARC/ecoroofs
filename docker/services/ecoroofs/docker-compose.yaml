@@ -12,9 +12,7 @@ volumes:
 
 services:
     geoserver:
-        image: ecoroofs-geoserver
-        build:
-            context: ../../ecoroofs-geoserver
+        image: psuoitwdt/geoserver
         networks:
             - ecoroofs
         ports:

@@ -1,21 +1,64 @@
-<form ng-submit="$ctrl.search()" layout="row" layout-align="start center">
-    <div flex>
-        <input type="search"
-               id="search_text"
-               name="search_text"
-               autocomplete="off"
-               placeholder="Search by street address ..."
-               title="Search for locations by name"
-               ng-model="$ctrl.searchTerm">
+<form ng-submit="$ctrl.search()">
+    <div flex layout="row" layout-align="start center">
+        <div flex>
+            <input type="search"
+                   id="search_text"
+                   name="search_text"
+                   autocomplete="off"
+                   placeholder="Search by neighborhood ..."
+                   title="Search for locations by name or neighborhood"
+                   ng-model="$ctrl.searchTerm">
+        </div>
+        <md-button type="submit" class="md-icon-button">
+            <md-icon>search</md-icon>
+        </md-button>
+        <md-button class="md-icon-button"
+                   ng-click="$ctrl.resetSearch()">
+            <md-icon>clear</md-icon>
+        </md-button>
+        <md-button class="md-icon-button"
+                   ng-click="$ctrl.showFilters=!$ctrl.showFilters">
+            <md-icon>filter_list</md-icon>
+        </md-button>
     </div>
-
-    <md-button type="submit" class="md-icon-button" ng-disabled="!$ctrl.searchTerm">
-        <md-icon>search</md-icon>
-    </md-button>
-
-    <md-button class="md-icon-button" ng-click="$ctrl.resetSearch()" ng-disabled="!$ctrl.searchTerm">
-        <md-icon>clear</md-icon>
-    </md-button>
+    <div
+        id="search_filters" flex layout="column" layout-padding
+        ng-show="$ctrl.showFilters">
+        <div layout="row">
+            <input type="number" id="depth_filter_min"
+                   name="depth_min"
+                   placeholder="Min depth"
+                   title="Filter by depth"
+                   ng-model="$ctrl.depth.min">
+            <input type="number" id="depth_filter_max"
+                   name="depth_max"
+                   placeholder="Max depth (inches)"
+                   title="Filter by depth"
+                   ng-model="$ctrl.depth.max">
+        </div>
+        <div layout="row">
+            <input type="number" id="year_built_min"
+                   name="year_built_min"
+                   placeholder="Min year built"
+                   title="Filter by year built"
+                   ng-model="$ctrl.year_built.min">
+            <input type="number" id="year_built_max"
+                   name="year_built_max"
+                   placeholder="Max year built"
+                   title="Filter by year built"
+                   ng-model="$ctrl.year_built.max">
+        </div>
+        <md-input-container>
+            <label>Building Use</label>
+            <md-select ng-model="$ctrl.usage">
+                <md-option
+                    ng-repeat="option in $ctrl.filterData"
+                    ng-value="option.id">
+                    {{ option.name }}
+                </md-option>
+            </md-select>
+        </md-input-container>
+    </div>
 </form>
 
 <md-divider ng-if="$ctrl.hasSearchResults"></md-divider>

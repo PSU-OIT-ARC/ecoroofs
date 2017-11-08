@@ -7,6 +7,11 @@ export default function locationResourceFactory ($resource) {
             method: 'GET',
             url: '/_/locations/search/',
             isArray: true
+        },
+        building_uses: {
+            method: 'GET',
+            url: '/_/locations/building-uses',
+            isArray: true
         }
     });
     return Location;

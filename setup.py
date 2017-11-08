@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 
-VERSION = '1.0.0'
+VERSION = '1.1.0'
 
 
 setup(
@@ -14,12 +14,12 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=[
-        'django>=1.10.7,<1.11',
-        'django-arcutils>=2.17.0',
+        'django>=1.11.0',
+        'django-arcutils>=2.22.0',
         'django-pgcli>=0.0.2',
-        'djangorestframework>=3.6.2',
+        'djangorestframework>=3.6.3',
         'Markdown>=2.6.8',
-        'psycopg2>=2.7.1',
+        'psycopg2>=2.7.3',
         'psu.oit.arc.tasks',
     ],
     extras_require={

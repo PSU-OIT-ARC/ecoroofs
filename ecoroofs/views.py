@@ -44,7 +44,7 @@ class AppView(APIView):
             'APP_CONFIG': {
                 'env': settings.ENV,
                 'version': dist.version,
-                'baseURL': staticfiles_storage.url(''),
+                'baseURL': settings.STATIC_URL,
                 'title': settings.PROJECT.title,
                 'user': {
                     'isAuthenticated': user.is_authenticated(),

@@ -6,7 +6,7 @@ import arcutils.cas.urls
 
 from .views import AppView
 
-from .locations.views import LocationViewSet, square_footage
+from .locations.views import LocationViewSet, square_footage, BuildingUseListView
 from .pages.views import PageViewSet
 
 
@@ -24,6 +24,8 @@ urlpatterns = [
     url(r'^_/locations/square-footage$', square_footage, name='square-footage'),
     url(r'^_/locations/square-footage/(?P<neighborhood>.+)$', square_footage,
         name='square-footage-neighborhood'),
+    url(r'^_/locations/building-uses$', BuildingUseListView.as_view(),
+        name='building-use')
 ]
 
 
