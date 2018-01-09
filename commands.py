@@ -3,7 +3,7 @@ from runcommands.util import abort, abs_path, args_to_str, printer
 
 from emcee.dev import commands as dev
 from emcee.aws import commands as aws
-from emcee.aws.deploy import AWSDeployer
+from emcee.aws.deploy import AWSPythonDeployer
 
 from emcee.aws.commands import *
 
@@ -86,12 +86,12 @@ def import_neighborhoods(config, path='rlis/nbo_hood', from_srid=None,
     location_importer.run()
 
 
-class Deployer(AWSDeployer):
+class Deployer(AWSPythonDeployer):
     def build_static(self):
         printer.header('Building static files (EcoRoofs custom)...')
         build_static(self.config, static_root='{path.build.static_root}')
 
-    def post_install(self):
+    def bootstrap_application(self):
         from emcee.remote import manage
 
         # Migrate database schema

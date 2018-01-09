@@ -6,7 +6,7 @@ Resources:
     Properties:
       TemplateURL: https://s3-us-west-2.amazonaws.com/cloudformation-templates.wdt.pdx.edu/ec2/private_host/private_host.template.yml
       Parameters:
-        ImageId: ami-6df1e514
+        ImageId: ami-903b9de8
         HostName: ecoroofs
         VpcStackName: vpc-stage
         HostedZoneName: stage.wdt.pdx.edu.
@@ -34,6 +34,6 @@ Resources:
         DBEngineVersion: 9.6
         DBInstanceName: ecoroofs
         DBUsername: ecoroofs_l
-        DBPassword: __SECRET__
+        DBPassword: __GENERATED__
         EC2StackName: !GetAtt Host.Outputs.StackName
         GeoserverStackName: geoserver-stage-Host-B7CNDDLN7R41

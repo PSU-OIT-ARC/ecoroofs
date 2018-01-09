@@ -14,7 +14,7 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=[
-        'psu.oit.wdt.emcee>=1.0.0.dev0',
+        'psu.oit.wdt.emcee>=1.0.0.dev1',
         'django>=1.10.8,<1.11',
         'django-arcutils>=2.24.0',
         'django-pgcli>=0.0.2',
