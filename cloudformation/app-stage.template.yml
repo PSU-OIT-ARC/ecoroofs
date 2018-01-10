@@ -36,4 +36,4 @@ Resources:
         DBUsername: ecoroofs_l
         DBPassword: __GENERATED__
         EC2StackName: !GetAtt Host.Outputs.StackName
-        GeoserverStackName: geoserver-stage-Host-B7CNDDLN7R41
+        GeoserverStackName: geoserver-stage-Host-1QVQHH2UHNAPN
