@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 
-VERSION = '.dev0'
+VERSION = '1.2.0.dev0'
 
 
 setup(
@@ -14,18 +14,19 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=[
-        'django>=1.11.0',
-        'django-arcutils>=2.22.0',
+        'django>=1.11.0,<2.0',
+        'psu.oit.wdt.emcee>=1.0.0.rc2',
+        'django-arcutils>=2.24.0',
         'django-pgcli>=0.0.2',
-        'djangorestframework>=3.6.3',
-        'Markdown>=2.6.8',
-        'psycopg2>=2.7.3',
-        'psu.oit.arc.tasks',
+        'djangorestframework>=3.6.4',
+        'Markdown>=2.6.9',
+        'psycopg2>=2.7.3.1'
     ],
     extras_require={
         'dev': [
             'flake8',
             'unidecode',
+            'docker-compose'
         ]
     },
 )

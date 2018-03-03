@@ -1,0 +1,47 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: "Resource stack for EcoRoofs"
+Resources:
+  AppRole:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: https://s3-us-west-2.amazonaws.com/cloudformation-templates.wdt.pdx.edu/1/iam/application_role.template.yml
+      Parameters:
+        HostName: ecoroofs
+        VpcStackName: vpc-stage
+  Host:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: https://s3-us-west-2.amazonaws.com/cloudformation-templates.wdt.pdx.edu/1/ec2/private_host/private_host.template.yml
+      Parameters:
+        ImageId: ami-903b9de8
+        HostName: !GetAtt AppRole.Outputs.HostName
+        VpcStackName: !GetAtt AppRole.Outputs.VpcStackName
+        IAMAppRoleName: !GetAtt AppRole.Outputs.EC2ApplicationRoleName
+        HostedZoneName: stage.wdt.pdx.edu.
+        UseEFSFilesystem: true
+  Networking:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: https://s3-us-west-2.amazonaws.com/cloudformation-templates.wdt.pdx.edu/1/ec2/private_host/networking.template.yml
+      Parameters:
+        EC2Instance: !GetAtt Host.Outputs.InstanceId
+        PrivateIp: !GetAtt Host.Outputs.PrivateIP
+        DnsHostName: !GetAtt AppRole.Outputs.HostName
+        VpcStackName: !GetAtt AppRole.Outputs.VpcStackName
+        HostedZoneName: stage.wdt.pdx.edu.
+        InternalDNSZone: stage-internal.
+        ELBListenerPriority: 4
+        ListenOn80: true
+  PostgreSQL:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: https://s3-us-west-2.amazonaws.com/cloudformation-templates.wdt.pdx.edu/1/rds/postgres.template.yml
+      Parameters:
+        VpcStackName: !GetAtt AppRole.Outputs.VpcStackName
+        AvailabilityZone: us-west-2a
+        DBEngineVersion: 9.6
+        DBInstanceName: ecoroofs
+        DBUsername: ecoroofs_l
+        DBPassword: __GENERATED__
+        EC2SecurityGroupId: !GetAtt Host.Outputs.EC2SecurityGroup
+        UseGeoserver: true

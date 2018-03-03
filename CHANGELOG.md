@@ -1,9 +1,8 @@
 # Change log for EcoRoofs
 
-## 1.2.0  - unreleased
+## 1.2.0 - unreleased
 
-In progress...
-
+- Configures the project to use 'emcee'.
 
 ## 1.1.0 - 2017-11-08
 
