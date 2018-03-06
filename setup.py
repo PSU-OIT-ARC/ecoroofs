@@ -18,9 +18,9 @@ setup(
         'psu.oit.wdt.emcee>=1.0.0.rc2',
         'django-arcutils>=2.24.0',
         'django-pgcli>=0.0.2',
-        'djangorestframework>=3.6.4',
-        'Markdown>=2.6.9',
-        'psycopg2>=2.7.3.1'
+        'djangorestframework>=3.7.7',
+        'Markdown>=2.6.11',
+        'psycopg2>=2.7.4'
     ],
     extras_require={
         'dev': [
