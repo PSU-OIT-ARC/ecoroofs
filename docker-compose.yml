@@ -1,0 +1,60 @@
+version: "3"
+
+networks:
+  default:
+    driver: bridge
+    ipam:
+      config:
+        # this value is a soft-reservation of the subnet in
+        # order to reduce friction w.r.t. a given local docker
+        # environment and project configuration.
+        # 
+        # if you encounter network definition conflicts, change
+        # the value below and revise its use in 'local.*.cfg'.
+        - subnet: 172.22.0.0/16
+
+services:
+  postgres:
+    image: kartoza/postgis:9.6-2.4
+    networks:
+      - default
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=ecoroofs
+      - POSTGRES_PASS=ecoroofs
+      - POSTGRES_DBNAME=ecoroofs
+    volumes:
+      - ./volumes/postgres:/var/lib/postgresql
+
+  geoserver:
+    image: kartoza/geoserver:2.12.1
+    networks:
+      - default
+    volumes:
+      - ./volumes/geoserver:/opt/geoserver/data_dir
+
+  proxy:
+    build: proxy
+    networks:
+      - default
+    ports:
+      - 80:80
+
+  ecoroofs:
+    image: psu.oit.wdt/ecoroofs
+    build: app
+    user: ecoroofs
+    environment:
+      - LOCAL_SETTINGS_FILE=local.docker.cfg
+      - WSGI_ROOT=/webapps/ecoroofs
+      - WSGI_VENV=/webapps/ecoroofs/venv-docker
+    networks:
+      - default
+    ports:
+      - 8000:8000
+    volumes:
+      - ./:/webapps/ecoroofs
+    depends_on:
+      - geoserver
+      - postgres

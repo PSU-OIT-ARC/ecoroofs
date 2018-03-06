@@ -1,22 +1,19 @@
 # Root
 /*.egg-info/
+/venv*/
 /.env/
 /build/
 /dist/
 /media/
 /rlis/
 /static/
-/local.cfg
-/local.dev.cfg
-/local.docker.cfg
-/local.test.cfg
+/volumes/
 /*/static/bundles/
 /*/static/node_modules/
 /*/static/**/*.css
-*.DS_Store
-
 
 # Anywhere
+*.DS_Store
 __pycache__/
 *.pyc
 *.pyo

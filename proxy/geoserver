@@ -1,0 +1,14 @@
+upstream backend {
+       server geoserver:8080;
+}
+
+server {
+       listen 80;
+
+       add_header Access-Control-Allow-Origin "*";
+
+       location / {
+              proxy_pass http://backend/;
+              proxy_redirect http://backend/ /;
+       }
+}
