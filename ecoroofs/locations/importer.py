@@ -4,10 +4,7 @@ import time
 from decimal import Decimal
 from sys import stderr
 
-from arcutils.colorize import printer
-
-from ..neighborhoods.models import Neighborhood
-from .models import *  # noqa
+from . import models
 
 
 # Map of CSV field names => model field names.
@@ -80,45 +77,17 @@ class Importer:
         self.real_run = not dry_run
         self.quiet = quiet
 
-    def print(self, *args, **kwargs):
-        if not self.quiet:
-            if self.dry_run:
-                args = ('[DRY RUN]',) + args
-            printer.print(*args, **kwargs)
-
-    def warn(self, *args, **kwargs):
-        args = ('WARNING:',) + args
-        kwargs['color'] = 'warning'
-        self.print(*args, **kwargs)
-
-    def run(self):
-        if Neighborhood.objects.count() == 0:
-            self.warn('WARNING: Neighborhoods have not been imported.', file=stderr)
-        if self.overwrite:
-            self.do_overwrite()
-        elif Location.objects.count():
-            self.warn('Importing locations without removing existing records.', file=stderr)
-            self.warn('This will likely FAIL due to duplicate key violations.', file=stderr)
-            time.sleep(5)
-        data = self.read_data()
-        self.column_to_table(data, BuildingUse)
-        self.column_to_table(data, Confidence)
-        self.column_to_table(data, ConstructionType)
-        self.column_to_table(data, Contractor)
-        self.column_to_table(data, Watershed)
-        self.insert_locations(data)
-
     def do_overwrite(self):
         models_to_delete = (
-            Location,
-            BuildingUse,
-            Confidence,
-            ConstructionType,
-            Contractor,
-            Watershed,
+            models.Location,
+            models.BuildingUse,
+            models.Confidence,
+            models.ConstructionType,
+            models.Contractor,
+            models.Watershed,
         )
         for model in models_to_delete:
-            self.print('Removing existing {model._meta.verbose_name_plural}...'.format(**locals()))
+            print('Removing existing {model._meta.verbose_name_plural}...'.format(**locals()))
             if self.real_run:
                 model.objects.all().delete()
 
@@ -168,11 +137,11 @@ class Importer:
 
     def insert_locations(self, data):
         locations = []
-        building_uses = {r.name: r for r in BuildingUse.objects.all()}
-        contractors = {r.name: r for r in Contractor.objects.all()}
-        watersheds = {r.name: r for r in Watershed.objects.all()}
-        construction_types = {r.name: r for r in ConstructionType.objects.all()}
-        confidences = {r.name: r for r in Confidence.objects.all()}
+        building_uses = {r.name: r for r in models.BuildingUse.objects.all()}
+        contractors = {r.name: r for r in models.Contractor.objects.all()}
+        watersheds = {r.name: r for r in models.Watershed.objects.all()}
+        construction_types = {r.name: r for r in models.ConstructionType.objects.all()}
+        confidences = {r.name: r for r in models.Confidence.objects.all()}
 
         # Used to keep track of names already used so we can ensure each
         # location has a unique name and slug.
@@ -182,7 +151,7 @@ class Importer:
             name = row['name']
 
             if name is None:
-                self.warn('Project name not set for location: {row}; skipping'.format_map(locals()))
+                print('Project name not set for location: {row}; skipping'.format_map(locals()))
                 continue
 
             name = self.normalize_name(name)
@@ -198,12 +167,12 @@ class Importer:
             # Addresses
             address = row['address']
             if address is None:
-                self.warn('Address is not set for location "{name}"'.format_map(locals()))
+                print('Address is not set for location "{name}"'.format_map(locals()))
             else:
                 address = self.normalize_name(address)
             address_obscured = row['address_obscured']
             if address_obscured is None:
-                self.warn(
+                print(
                     'Address (Obscured) is not set for location "{name}"'
                     .format_map(locals()))
             else:
@@ -222,40 +191,40 @@ class Importer:
             # Numeric fields
             depth_min = row['depth_min']
             if depth_min is None:
-                self.warn('Depth Min is not set for location "{name}"'.format_map(locals()))
+                print('Depth Min is not set for location "{name}"'.format_map(locals()))
             else:
                 depth_min = Decimal(depth_min)
 
             depth_max = row['depth_max']
             if depth_max is None:
-                self.warn('Depth Max is not set for location "{name}"'.format_map(locals()))
+                print('Depth Max is not set for location "{name}"'.format_map(locals()))
             else:
                 depth_max = Decimal(depth_max)
 
             number_of_roofs = row['number_of_roofs']
             if number_of_roofs is None:
-                self.warn(
+                print(
                     'Number of roofs not set for location "{name}" Using default value'
                     .format_map(locals()))
-                field = Location._meta.get_field('number_of_roofs')
+                field = models.Location._meta.get_field('number_of_roofs')
                 number_of_roofs = field.get_default()
             else:
                 number_of_roofs = int(number_of_roofs)
 
             square_footage = row['square_footage']
             if square_footage is None:
-                self.warn('Square footage not set for location "{name}"'.format_map(locals()))
+                print('Square footage not set for location "{name}"'.format_map(locals()))
             else:
                 square_footage, *rest = square_footage.split(None, 1)
                 if rest:
-                    self.warn(
+                    print(
                         'Extraneous data in square footage for location "{name}": {rest[0]}'
                         .format_map(locals()))
                 square_footage = int(square_footage)
 
             year_built = row['year_built']
             if year_built is None:
-                self.warn(
+                print(
                     'Year Built not set for location "{name}"'
                     .format_map(locals()))
             else:
@@ -273,7 +242,7 @@ class Importer:
             coordinates = {'x': row['longitude'], 'y': row['latitude']}
             point = 'POINT({x} {y})'.format_map(coordinates)
             if coordinates['x'] is None or coordinates['y'] is None:
-                self.warn(
+                print(
                     'Coordinates not set for location "{name}": {point}; skipping'
                     .format_map(locals()))
                 continue
@@ -282,12 +251,12 @@ class Importer:
             coordinates = {'x': row['longitude_obscured'], 'y': row['latitude_obscured']}
             point_obscured = 'POINT({x} {y})'.format_map(coordinates)
             if coordinates['x'] is None or coordinates['y'] is None:
-                self.warn(
+                print(
                     'Obscured coordinates not set for location "{name}": {point_obscured}; skipping'
                     .format_map(locals()))
                 continue
 
-            location = Location(
+            location = models.Location(
                 address=address,
                 address_obscured=address_obscured,
                 building_use=building_use,
@@ -314,10 +283,10 @@ class Importer:
             locations.append(location)
 
         num_locations = len(locations)
-        self.print('Creating', num_locations, 'locations...', end='')
+        print('Creating', num_locations, 'locations...', end='')
         if self.real_run:
-            Location.objects.bulk_create(locations)
-        self.print('Done')
+            models.Location.objects.bulk_create(locations)
+        print('Done')
 
     def column_to_table(self, data, model, from_field_name=None, to_field_name='name'):
         """Take column values for field from data and insert into table.
@@ -334,19 +303,34 @@ class Importer:
         if from_field_name is None:
             from_field_name = model_name.replace(' ', '_')
 
-        self.print('Extracting', model_name, 'values...')
+        print('Extracting', model_name, 'values...')
         values = {row[from_field_name] for row in data}
         values = {value for value in values if value is not None}
         values = {self.normalize_name(value) for value in values}
         num_values = len(values)
-        self.print('Found', num_values, 'distinct, non-empty', model_name, 'values:')
+        print('Found', num_values, 'distinct, non-empty', model_name, 'values:')
         for value in sorted(values):
-            self.print('    "{}"'.format(value))
-        self.print('Done extracting', model_name, 'values')
+            print('    "{}"'.format(value))
+        print('Done extracting', model_name, 'values')
 
         records = [model(**{to_field_name: value}) for value in values if value]
         num_records = len(records)
-        self.print('Inserting', num_records, model_name, 'records...', end='')
+        print('Inserting', num_records, model_name, 'records...', end='')
         if self.real_run:
             model.objects.bulk_create(records)
-        self.print('Done')
+        print('Done')
+
+    def run(self):
+        if self.overwrite:
+            self.do_overwrite()
+        elif models.Location.objects.count():
+            print('Importing locations without removing existing records.', file=stderr)
+            print('This will likely FAIL due to duplicate key violations.', file=stderr)
+            time.sleep(5)
+        data = self.read_data()
+        self.column_to_table(data, models.BuildingUse)
+        self.column_to_table(data, models.Confidence)
+        self.column_to_table(data, models.ConstructionType)
+        self.column_to_table(data, models.Contractor)
+        self.column_to_table(data, models.Watershed)
+        self.insert_locations(data)

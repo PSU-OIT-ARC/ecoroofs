@@ -1,6 +1,7 @@
 from django.db import transaction
 from django.db.models.signals import pre_save
 from django.contrib.gis.utils import LayerMapping
+
 from ecoroofs.neighborhoods.models import Neighborhood, normalize_name
 
 
@@ -14,18 +15,12 @@ class Importer:
         self.real_run = not dry_run
         self.quiet = quiet
 
-    def print(self, *args, **kwargs):
-        if not self.quiet:
-            if self.dry_run:
-                args = ('[DRY RUN]',) + args
-            print(*args, **kwargs)
-
     def run(self):
         if self.overwrite:
-            self.print('Removing existing neighborhoods...', end='')
+            print('Removing existing neighborhoods...', end='')
             if self.real_run:
                 Neighborhood.objects.all().delete()
-            self.print('Done')
+            print('Done')
 
         # Disconnect this temporarily so that the ``unique='name'`` option
         # passed to LayerMapping will work correctly (it collects all
@@ -34,21 +29,21 @@ class Importer:
         # this feature won't work).
         pre_save.disconnect(normalize_name, sender=Neighborhood)
 
-        self.print('Adding neighborhoods...', end='')
+        print('Adding neighborhoods...', end='')
         if self.real_run:
             mapping = LayerMapping(
                 Neighborhood, self.path, Neighborhood.layer_mapping, source_srs=self.from_srid,
                 unique='name')
             mapping.save(strict=True)
-        self.print('Done')
+        print('Done')
 
-        self.print('Normalizing neighborhood names...', end='')
+        print('Normalizing neighborhood names...', end='')
         neighborhoods = Neighborhood.objects.all()
         if self.real_run:
             with transaction.atomic():
                 for neighborhood in neighborhoods:
                     neighborhood.name = Neighborhood.normalize_name(neighborhood.name)
                     neighborhood.save()
-        self.print('Done')
+        print('Done')
 
         pre_save.connect(normalize_name, sender=Neighborhood)
