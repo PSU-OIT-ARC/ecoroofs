@@ -12,6 +12,9 @@ from emcee.backends.aws.provision.services.remote import provision_database
 from emcee.backends.aws.deploy import AWSDjangoDeployer
 from emcee.backends.aws.infrastructure.commands import *
 
+from emcee.deploy.util import copy_file_local
+from emcee.deploy.django import LocalProcessor
+
 
 @command(env='dev', timed=True)
 def init(config, overwrite=False, drop_db=False):
@@ -24,6 +27,21 @@ def init(config, overwrite=False, drop_db=False):
     # test(config, force_env='test')
 
 
+class EcoroofsProcessor(LocalProcessor):
+    def copy_files(self):
+        super(EcoroofsProcessor, self).copy_files()
+
+        config = self.config
+        build_dir = config.path.build.root
+
+        # Copy locations data
+        copy_file_local(config, 'locations.csv', build_dir)
+
+
+class EcoroofsDeployer(AWSDjangoDeployer):
+    local_processor_cls = EcoroofsProcessor
+
+
 @command
 def deploy_app(config, provision=False, createdb=False):
     if provision:
@@ -34,4 +52,4 @@ def deploy_app(config, provision=False, createdb=False):
         provision_database(config, with_postgis=True,
                            extensions=['postgis', 'hstore'])
 
-    deploy(config, deployer_class=AWSDjangoDeployer)
+    deploy(config, deployer_class=EcoroofsDeployer)
